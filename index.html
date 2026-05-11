@@ -1,0 +1,490 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ministry of Beautiful — Design Direction</title>
+<meta name="description" content="Ministry of Beautiful — Design Direction & Creative Strategy. 20+ years of world-class design.">
+<meta property="og:title" content="Ministry of Beautiful">
+<meta property="og:description" content="Design Direction & Creative Strategy">
+<meta property="og:image" content="https://yourdomain.com/images/sw-1.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Montserrat',sans-serif;background:#111;color:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+
+/* ===== NAV ===== */
+nav{position:fixed;top:0;width:100%;display:flex;justify-content:space-between;align-items:center;padding:24px 44px;z-index:1000;background:rgba(17,17,17,.92);backdrop-filter:blur(14px)}
+.nav-brand{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;line-height:1.4;transition:opacity .25s}
+.nav-brand:hover{opacity:.6}
+.nav-center{display:flex;gap:32px}
+.nav-center a{font-size:12px;font-weight:700;letter-spacing:.5px;transition:opacity .25s}
+.nav-center a:hover{opacity:.5}
+.nav-clock{font-size:12px;font-weight:700;letter-spacing:.5px}
+
+/* ===== HERO ===== */
+.hero{position:relative;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero-video{position:absolute;inset:0;z-index:1}
+.hero-video video{width:100%;height:100%;object-fit:cover}
+.hero-wm{position:relative;z-index:2;text-align:center;user-select:none;pointer-events:none}
+.hero-wm h1{font-size:clamp(60px,11vw,160px);font-weight:500;text-transform:uppercase;color:rgba(255,255,255,.06);line-height:.95;letter-spacing:-6px}
+
+/* ===== WORKS (Masonry Scatter) ===== */
+.works{padding:100px 44px 0;background:#111;position:relative;z-index:5}
+.works-head{margin-bottom:48px}
+.works-head h2{font-size:28px;font-weight:700;text-transform:uppercase;letter-spacing:-.5px}
+
+/* STAGE — masonry scatter container */
+.stage{position:relative;width:100%;overflow:visible;margin-bottom:80px}
+
+/* WORK ITEM — absolutely positioned by JS */
+.item{position:absolute;overflow:hidden;transition:filter .3s ease,box-shadow .3s ease;z-index:1;display:block}
+.item:hover{z-index:10}
+
+/* Image wrapper */
+.item .thumb{width:100%;border-radius:4px;overflow:hidden;background:#1a1a1a}
+.item .thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.25,.46,.45,.94)}
+.item:hover .thumb img{transform:scale(1.04)}
+
+/* Label below image */
+.item .label{padding:8px 0 0;font-size:12px;font-weight:500;color:#aaa;line-height:1.4;letter-spacing:.2px}
+.item .label span{font-size:11px;font-weight:400;color:#555}
+
+/* Placeholder */
+.placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:9px;color:rgba(255,255,255,.06)}
+
+/* ===== INFO SECTION ===== */
+.info{position:relative;padding:100px 44px;display:grid;grid-template-columns:55% 45%;background:#111;z-index:5;border-top:1px solid #1a1a1a}
+.info-content{padding-right:60px}
+.info-row{display:grid;grid-template-columns:160px 1fr;gap:24px;padding:28px 0;border-top:1px solid #1a1a1a}
+.info-label{font-size:11px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:#666;padding-top:3px}
+.info-text{font-size:14px;font-weight:400;color:#bbb;line-height:1.8}
+.info-text strong{color:#fff;font-weight:600}
+.career-item{font-size:13px;color:#aaa;line-height:2}
+
+/* STICKY PORTRAIT */
+.portrait-col{position:sticky;top:80px;height:calc(55vh - 55px)}
+.portrait-img{width:100%;height:100%;border-radius:4px;overflow:hidden;background:#1a1a1a}
+.portrait-img img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+.portrait-placeholder{width:100%;height:100%;background:linear-gradient(180deg,#2a2a2a,#1a1a1a 50%,#222);display:flex;align-items:center;justify-content:center;font-size:10px;color:#333;letter-spacing:3px;text-transform:uppercase}
+
+/* ===== GET IN TOUCH ===== */
+.touch{padding:100px 44px 60px;background:#111;border-top:1px solid #1a1a1a;z-index:5;position:relative}
+.touch h2{font-size:28px;font-weight:700;text-transform:uppercase;margin-bottom:24px;letter-spacing:-1px}
+.touch-links{display:flex;gap:32px}
+.touch-links a{font-size:12px;font-weight:500;letter-spacing:.5px;text-transform:uppercase;transition:opacity .25s}
+.touch-links a:hover{opacity:.5}
+
+/* ===== FOOTER ===== */
+footer{padding:40px 44px;border-top:1px solid #1a1a1a;text-align:center}
+footer p{font-size:10px;color:#333;letter-spacing:1px}
+
+/* ===== ANIMATIONS ===== */
+.fade-up{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+
+/* PAGE EXIT ANIMATION */
+@keyframes fadeOutUp{to{opacity:0;transform:translateY(-30px)}}
+.page-exit{animation:fadeOutUp .4s ease-in forwards}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1024px){
+    .info{grid-template-columns:1fr}
+    .portrait-col{display:none}
+    .stage{max-width:100%}
+}
+@media(max-width:768px){
+    nav{padding:18px 24px}
+    .nav-center{gap:20px}
+    .hero-wm h1{font-size:44px;letter-spacing:-3px}
+    .works,.info,.touch{padding-left:24px;padding-right:24px}
+    .info-row{grid-template-columns:1fr;gap:8px}
+    footer{padding:30px 24px}
+    .works-head h2{font-size:22px}
+}
+@media(max-width:480px){
+    .nav-center{gap:14px}
+    .nav-center a,.nav-brand,.nav-clock{font-size:10px}
+}
+
+/* ===== CUSTOM CURSOR ===== */
+*,a,button{cursor:none !important}
+.cursor{position:fixed;top:0;left:0;width:17px;height:17px;background:#c489e2;border-radius:50%;pointer-events:none;z-index:99999;mix-blend-mode:difference;transform:translate(-50%,-50%);transition:width .3s ease,height .3s ease,background .3s ease}
+.cursor.hover{width:38px;height:38px}
+.cursor.loading{width:24px;height:24px;background:transparent;border:2px solid #fff;animation:cursorSpin .8s linear infinite}
+.cursor.loading::before,.cursor.loading::after{content:'';position:absolute;background:#fff;top:50%;left:50%;transform:translate(-50%,-50%)}
+.cursor.loading::before{width:12px;height:2px}
+.cursor.loading::after{width:2px;height:12px}
+@keyframes cursorSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+@media(hover:none)and(pointer:coarse){.cursor{display:none !important}*,a,button{cursor:auto !important}}
+
+</style>
+</head>
+<body>
+
+<!-- CUSTOM CURSOR -->
+<div class="cursor" id="cursor"></div>
+
+<!-- NAV — Logo (home) + WORKS + CONTACT -->
+<nav>
+<a href="#hero" class="nav-brand">MINISTRY<br>OF BEAUTIFUL</a>
+<div class="nav-center">
+<a href="#works">WORKS</a>
+<a href="#contact">CONTACT</a>
+</div>
+<div class="nav-clock" id="clock"></div>
+</nav>
+
+<!-- 1. HERO -->
+<section class="hero" id="hero">
+<div class="hero-video">
+<div style="width:100%;height:100%;background:#111"></div>
+</div>
+<div class="hero-wm" id="watermark">
+<h1>MINISTRY<br>OF BEAUTIFUL</h1>
+</div>
+</section>
+
+<!-- 2. WORKS (Masonry Scatter) -->
+<section class="works fade-up" id="works">
+<div class="works-head">
+<h2>Works</h2>
+</div>
+
+<div class="stage" id="stage">
+
+    <a href="project-1.html" class="item" data-ratio="3:4">
+<div class="thumb"><img src="images/thumbs/project-1-thumb.jpg" alt="Weirdly Wonderful"></div>
+<div class="label">WEIRDLY WONDERFUL / VELO<br><span>2025</span></div>
+</a>
+    <a href="project-2.html" class="item" data-ratio="4:3">
+        <div class="thumb"><img src="images/thumbs/project-2-thumb.jpg" alt="11prop"></div>
+        <div class="label">11prop / BRAND IDENTITY<br><span>2024</span></div>
+    </a>
+    <a href="project-3.html" class="item" data-ratio="1:1">
+        <div class="thumb"><img src="images/thumbs/project-3-thumb.jpg" alt="v6.1"></div>
+        <div class="label">MOB x MJ / 001-015<br><span>2021</span></div>
+    </a>
+    <a href="project-4.html" class="item" data-ratio="16:9">
+        <div class="thumb"><img src="images/thumbs/project-4-thumb.jpg" alt="Generative"></div>
+        <div class="label">GENERATIVE SERIES 01 / 001-016<br><span>2023</span></div>
+    </a>
+    <a href="project-5.html" class="item" data-ratio="1:1">
+        <div class="thumb"><img src="images/thumbs/project-5-thumb.jpg" alt="Stylo"></div>
+        <div class="label">STYLO PITCH / BBDO PAKISTAN<br><span>2021</span></div>
+    </a>
+    <a href="project-6.html" class="item" data-ratio="3:4">
+        <div class="thumb"><img src="images/thumbs/project-6-thumb.jpg" alt="WAR MACHINES"></div>
+        <div class="label">COMIC SERIES 01 / WAR MACHINES<br><span>2026</span></div>
+    </a>
+    <a href="project-7.html" class="item" data-ratio="4:3">
+       <div class="thumb"><img src="images/thumbs/project-7-thumb.jpg" alt="RAM-Pa"></div>
+        <div class="label">RAM-PA & THE ELDER BITS<br><span>2022</span></div>
+    </a>
+    <a href="project-8.html" class="item" data-ratio="3:2">
+        <div class="thumb"><img src="images/thumbs/project-8-thumb.jpg" alt="VELO"></div>
+        <div class="label">CHOOSE BETTER YAARRR / VELO<br><span>2021</span></div>
+    </a>
+    <a href="project-9.html" class="item" data-ratio="16:9">
+       <div class="thumb"><img src="images/thumbs/project-9-thumb.jpg" alt="Generative"></div>
+        <div class="label">GENERATIVE SERIES 03 / 001-016<br><span>2023</span></div>
+    </a>
+    <a href="project-10.html" class="item" data-ratio="3:4">
+        <div class="thumb"><div class="placeholder" style="background:linear-gradient(135deg,#ff4500,#cc3300)">010</div></div>
+        <div class="label">the End of August<br><span>2017</span></div>
+    </a>
+    <a href="project-11.html" class="item" data-ratio="1:1">
+        <div class="thumb"><img src="images/thumbs/project-11-thumb.jpg" alt="Generative"></div>
+        <div class="label">GENERATIVE SERIES 04 / 001-017<br><span>2017</span></div>
+    </a>
+    <a href="project-12.html" class="item" data-ratio="4:3">
+        <div class="thumb"><div class="placeholder" style="background:linear-gradient(135deg,#33691e,#558b2f)">012</div></div>
+        <div class="label">UEFA Champions League Final 2017<br><span>2017</span></div>
+    </a>
+    <a href="project-13.html" class="item" data-ratio="3:4">
+        <div class="thumb"><img src="images/thumbs/project-13-thumb.jpg" alt="PROCESSING"></div>
+        <div class="label">MOB x PROCESSING / 001-009<br><span>2021</span></div>
+    </a>
+    <a href="project-14.html" class="item" data-ratio="16:9">
+        <div class="thumb"><div class="placeholder" style="background:linear-gradient(135deg,#1a3a5a,#2a5a8a)">014</div></div>
+        <div class="label">GENERATIVE SERIES 04<br><span>2020</span></div>
+    </a>
+    <a href="project-15.html" class="item" data-ratio="1:1">
+        <div class="thumb"><div class="placeholder" style="background:linear-gradient(135deg,#4466ff,#2244cc)">015</div></div>
+        <div class="label">GENERATIVE SERIES 05<br><span>2020</span></div>
+    </a>
+    <a href="project-16.html" class="item" data-ratio="3:2">
+        <div class="thumb"><div class="placeholder" style="background:linear-gradient(135deg,#2a1a3a,#4a2a5a)">016</div></div>
+        <div class="label">GENERATIVE SERIES 06<br><span>2020</span></div>
+    </a>
+    <a href="project-17.html" class="item" data-ratio="3:2">
+        <div class="thumb"><div class="placeholder" style="background:linear-gradient(135deg,#0a1a0a,#1aff4a)">001</div></div>
+        <div class="label">DON'T BE A FOOL / DARK<br><span>2021</span></div>
+    </a>
+     <a href="project-18.html" class="item" data-ratio="1:1">
+        <div class="thumb"><img src="images/thumbs/project-18-thumb.jpg" alt="Generative"></div>
+        <div class="label">GENERATIVE SERIES 02 / CIRCLES 001 - 010<br><span>2021</span></div>
+    </a>
+</div>
+</section>
+
+<!-- 3. INFO SECTION -->
+<section class="info fade-up" id="about">
+<div style="grid-column: 1 / -1; margin-bottom: 20px;">
+<h2 style="font-size:28px;font-weight:700;text-transform:uppercase;letter-spacing:-.5px;">Info</h2>
+</div>
+
+<div class="info-content">
+<div class="info-row">
+    <div class="info-label">What I Do</div>
+    <div class="info-text">I shape form and color for a living.</div>
+</div>
+<div class="info-row">
+    <div class="info-label">My Background</div>
+    <div class="info-text">Originally from Pakistan, I've been designing identities for 20+ years, partnered with <strong>world-class creative agencies</strong> to deliver high-tier design solutions.</div>
+</div>
+<div class="info-row">
+    <div class="info-label">My Approach</div>
+    <div class="info-text">I ask questions, listen closely, and I blend technical precision with artistic intuition to bring brand stories to life. I thrive on mastering emerging technologies and software to create visually stunning, high-impact campaigns.</div>
+</div>
+<div class="info-row">
+    <div class="info-label">Career</div>
+    <div class="info-text">
+        <div class="career-item">(2009 – 2015) Creative Manager at Interflow Ltd.</div>
+        <div class="career-item">(2015 – 2017) Art Director at AdCom Leo Burnett</div>
+        <div class="career-item">(2017 – 2018) Head of Design at J. Walter Thompson</div>
+        <div class="career-item">(2018 – 2024) Head of Design at Ogilvy Pakistan</div>
+        <div class="career-item">(2024 – 2025) Design Director at BBDO Pakistan</div>
+        <div class="career-item">(2025 – now) Design Director at Ogilvy Pakistan</div>
+    </div>
+</div>
+</div>
+
+<div class="portrait-col">
+<div class="portrait-img">
+    <div class="portrait-placeholder">Your B&W Portrait Here</div>
+</div>
+</div>
+</section>
+
+<!-- 4. GET IN TOUCH -->
+<section class="touch fade-up" id="contact">
+<h2>Get In Touch</h2>
+<div class="touch-links">
+<a href="mailto:awaisxmohsin@gmail.com">EMAIL</a>
+<a href="#">INSTAGRAM</a>
+</div>
+</section>
+
+<footer><p>&copy; 2026 MINISTRY OF BEAUTIFUL</p></footer>
+
+<!-- JAVASCRIPT -->
+<script>
+// Live Clock
+function tick(){
+    var n=new Date(),h=n.getHours(),m=String(n.getMinutes()).padStart(2,'0'),s=String(n.getSeconds()).padStart(2,'0'),ap=h>=12?'PM':'AM';
+    h=h%12;h=h?h:12;
+    document.getElementById('clock').textContent=String(h).padStart(2,'0')+':'+m+':'+s+' '+ap;
+}
+setInterval(tick,1000);tick();
+
+// Parallax watermark on scroll
+window.addEventListener('scroll', function(){
+    var y = window.pageYOffset;
+    var wm = document.getElementById('watermark');
+    if(y < window.innerHeight){
+        wm.style.transform = 'translateY(' + (y * 0.4) + 'px)';
+        wm.style.opacity = 1 - (y / (window.innerHeight * 0.7));
+    }
+});
+
+// Fade-in sections on scroll
+var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+        if(entry.isIntersecting) entry.target.classList.add('visible');
+    });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(function(el){ obs.observe(el); });
+</script>
+
+<!-- MASONRY SCATTER ENGINE -->
+<script>
+(function(){
+    var stage = document.getElementById('stage');
+    var items = document.querySelectorAll('.item');
+    if(!items.length) return;
+
+    var scrollEnergy = 0;
+    var lastScroll = window.pageYOffset;
+    var hoveredIndex = -1;
+    var time = 0;
+
+    var nodes = [];
+    var cols;
+    var gap = 14;
+    var labelHeight = 40;
+
+    function getCols(){
+        if(window.matchMedia('(max-width: 550px)').matches) return 2;
+        if(window.matchMedia('(max-width: 768px)').matches) return 3;
+        if(window.matchMedia('(max-width: 1024px)').matches) return 4;
+        return 5;
+    }
+
+    function parseRatio(str){
+        if(!str) return 1;
+        var parts = str.split(':');
+        var w = parseFloat(parts[0]) || 1;
+        var h = parseFloat(parts[1]) || 1;
+        return h / w;
+    }
+
+    function buildLayout(){
+        cols = getCols();
+        var stageW = stage.offsetWidth;
+        var colW = (stageW - gap * (cols - 1)) / cols;
+
+        var colHeights = [];
+        for(var c = 0; c < cols; c++) colHeights.push(0);
+
+        nodes = [];
+
+        for(var i = 0; i < items.length; i++){
+            var card = items[i];
+            var ratio = parseRatio(card.getAttribute('data-ratio'));
+            var thumbH = colW * ratio;
+            var totalH = thumbH + labelHeight;
+
+            var shortCol = 0;
+            for(var c = 1; c < cols; c++){
+                if(colHeights[c] < colHeights[shortCol]) shortCol = c;
+            }
+
+            card.style.width = colW + 'px';
+            var thumb = card.querySelector('.thumb');
+            if(thumb) thumb.style.height = thumbH + 'px';
+
+            var baseX = shortCol * (colW + gap);
+            var baseY = colHeights[shortCol];
+            colHeights[shortCol] += totalH + gap;
+
+            nodes.push({
+                el: card,
+                baseX: baseX,
+                baseY: baseY,
+                x: 0, y: 0,
+                targetAngle: Math.random() * Math.PI * 2,
+                targetDist: 1 + Math.random() * 15,
+                wanderSpeed: 0.2 + Math.random() * 0.3,
+                wanderPhase: Math.random() * Math.PI * 2
+            });
+        }
+
+        var maxH = 0;
+        for(var c = 0; c < cols; c++){
+            if(colHeights[c] > maxH) maxH = colHeights[c];
+        }
+        stage.style.height = maxH + 'px';
+    }
+
+    buildLayout();
+
+    items.forEach(function(card, i){
+        card.addEventListener('mouseenter', function(){ hoveredIndex = i; });
+        card.addEventListener('mouseleave', function(){ hoveredIndex = -1; });
+    });
+
+    window.addEventListener('scroll', function(){
+        var current = window.pageYOffset;
+        scrollEnergy += Math.abs(current - lastScroll) * 0.2;
+        scrollEnergy = Math.min(scrollEnergy, 60);
+        lastScroll = current;
+    });
+
+    function animate(){
+        time += 0.016;
+        scrollEnergy *= 0.97;
+
+        for(var i = 0; i < nodes.length; i++){
+            var n = nodes[i];
+            var card = n.el;
+            var isHovered = (i === hoveredIndex);
+
+            n.targetAngle += Math.sin(time * n.wanderSpeed + n.wanderPhase) * 0.02;
+
+            var scatterMult = isHovered ? 0 : (1.0 + scrollEnergy * 0.03);
+            var otherBoost = (hoveredIndex >= 0 && !isHovered) ? 1.5 : 1.0;
+
+            var targetX = Math.cos(n.targetAngle) * n.targetDist * scatterMult * otherBoost;
+            var targetY = Math.sin(n.targetAngle) * n.targetDist * scatterMult * otherBoost;
+
+            targetX += Math.sin(time * 0.4 + i) * 3;
+            targetY += Math.cos(time * 0.3 + i * 0.7) * 2.5;
+
+            var ease = isHovered ? 0.12 : 0.03;
+            n.x += (targetX - n.x) * ease;
+            n.y += (targetY - n.y) * ease;
+
+            var finalX = n.baseX + n.x;
+            var finalY = n.baseY + n.y;
+            card.style.transform = 'translate(' + finalX.toFixed(2) + 'px, ' + finalY.toFixed(2) + 'px)';
+        }
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+    window.addEventListener('resize', buildLayout);
+})();
+</script>
+
+<!-- PAGE EXIT (for project links) -->
+<script>
+document.querySelectorAll('a.item').forEach(function(link){
+    link.addEventListener('click', function(e){
+        if(e.metaKey || e.ctrlKey) return;
+        e.preventDefault();
+        var destination = this.href;
+        document.body.classList.add('page-exit');
+        setTimeout(function(){ window.location.href = destination; }, 400);
+    });
+});
+window.addEventListener('pageshow', function(){ document.body.classList.remove('page-exit'); });
+</script>
+
+<!-- CUSTOM CURSOR -->
+<script>
+(function(){
+    var cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', function(e){
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+    });
+    document.addEventListener('mouseover', function(e){
+        if(e.target.closest('a, button, .item, [role="button"]')){
+            cursor.classList.add('hover');
+        }
+    });
+    document.addEventListener('mouseout', function(e){
+        if(e.target.closest('a, button, .item, [role="button"]')){
+            cursor.classList.remove('hover');
+        }
+    });
+    document.querySelectorAll('a[href]').forEach(function(link){
+        var href = link.getAttribute('href');
+        if(href && !href.startsWith('#') && !href.startsWith('mailto:')){
+            link.addEventListener('click', function(){ cursor.classList.add('loading'); });
+        }
+    });
+    window.addEventListener('pageshow', function(){ cursor.classList.remove('loading'); });
+    document.addEventListener('mouseleave', function(){ cursor.style.opacity='0'; });
+    document.addEventListener('mouseenter', function(){ cursor.style.opacity='1'; });
+})();
+</script>
+
+</body>
+</html>

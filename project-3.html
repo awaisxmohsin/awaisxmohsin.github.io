@@ -1,0 +1,193 @@
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MOB X MJ / 001-015 — Ministry of Beautiful</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{font-family:'Montserrat',sans-serif;background:#111;color:#fff;-webkit-font-smoothing:antialiased;opacity:1;transition:opacity .4s ease}
+    body.is-leaving{opacity:0;transform:translateY(-20px)}
+    a{color:inherit;text-decoration:none}
+
+    nav{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:24px 44px;z-index:100;background:rgba(17,17,17,.95);backdrop-filter:blur(12px);border-bottom:1px solid #1a1a1a}
+    .nav-brand{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;line-height:1.4;transition:opacity .25s}
+    .nav-brand:hover{opacity:.6}
+    .nav-center{display:flex;gap:32px}
+    .nav-center a{font-size:12px;font-weight:700;letter-spacing:.5px;transition:opacity .25s}
+    .nav-center a:hover{opacity:.5}
+    .nav-clock{font-size:12px;font-weight:700;letter-spacing:.5px}
+
+    .back-nav{padding:20px 44px}
+    .back-nav a{font-size:11px;color:#666;transition:color .25s}
+    .back-nav a:hover{color:#fff}
+
+    .page-content{opacity:0;transform:translateY(30px);animation:fadeInUp .8s .1s ease forwards}
+    @keyframes fadeInUp{to{opacity:1;transform:translateY(0)}}
+
+    .project-body{padding:0 44px}
+
+    /* IMAGE ROWS */
+    .row{display:grid;gap:10px;margin-bottom:10px}
+    .row.cols-1{grid-template-columns:1fr}
+    .row.cols-2{grid-template-columns:1fr 1fr}
+    .row.cols-3{grid-template-columns:1fr 1fr 1fr}
+    .row.cols-4{grid-template-columns:1fr 1fr 1fr 1fr}
+
+    .cell{overflow:hidden;background:#1a1a1a}
+    .cell.r-1-1{aspect-ratio:1/1}
+    .cell.r-3-4{aspect-ratio:3/4}
+    .cell.r-4-3{aspect-ratio:4/3}
+    .cell.r-16-9{aspect-ratio:16/9}
+    .cell.r-9-16{aspect-ratio:9/16}
+    .cell.r-2-3{aspect-ratio:2/3}
+    .cell.r-3-2{aspect-ratio:3/2}
+
+    .cell img{width:100%;height:100%;object-fit:cover;display:block}
+
+    /* TEXT SECTION */
+    .text-section{display:grid;grid-template-columns:1fr 1fr;gap:80px;padding:100px 0;align-items:start}
+    .text-section .col-left h2{font-size:clamp(24px,3.5vw,38px);font-weight:700;line-height:1.25;letter-spacing:-.5px;color:#fff}
+    .text-section .col-left p{font-size:13px;font-weight:400;color:#666;margin-top:8px}
+    .text-section .col-right{padding-top:6px}
+    .text-section .col-right p{font-size:14px;font-weight:400;color:#888;line-height:2;margin-bottom:18px}
+    .text-section .col-right p:last-child{margin-bottom:0}
+
+    /* PREV / NEXT */
+    .bn{display:flex;justify-content:space-between;align-items:center;padding:60px 44px;border-top:1px solid #1a1a1a;margin-top:60px}
+    .bn a{transition:opacity .25s}
+    .bn a:hover{opacity:.7}
+    .nl{font-size:9px;text-transform:uppercase;letter-spacing:3px;color:#444;margin-bottom:6px}
+    .nn{font-size:16px;font-weight:500;color:#888}
+    .bn .nx{text-align:right}
+
+    @media(max-width:768px){
+        nav{padding:18px 24px}
+        .back-nav{padding:16px 24px}
+        .project-body{padding:0 24px}
+        .row.cols-4{grid-template-columns:1fr 1fr}
+        .row.cols-3{grid-template-columns:1fr}
+        .text-section{grid-template-columns:1fr;gap:30px;padding:60px 0}
+        .bn{padding:40px 24px;flex-direction:column;gap:28px;text-align:center}
+        .bn .nx{text-align:center}
+    }
+    @media(max-width:480px){
+        .nav-center{gap:14px}
+        .nav-center a,.nav-brand,.nav-clock{font-size:10px}
+        .row.cols-2{grid-template-columns:1fr}
+    }
+
+    /* CUSTOM CURSOR */
+    *,a,button{cursor:none !important}
+    .cursor{position:fixed;top:0;left:0;width:17px;height:17px;background:#c489e2;border-radius:50%;pointer-events:none;z-index:99999;mix-blend-mode:difference;transform:translate(-50%,-50%);transition:width .3s ease,height .3s ease,background .3s ease}
+    .cursor.hover{width:38px;height:38px}
+    .cursor.loading{width:24px;height:24px;background:transparent;border:2px solid #fff;animation:cursorSpin .8s linear infinite}
+    .cursor.loading::before,.cursor.loading::after{content:'';position:absolute;background:#fff;top:50%;left:50%;transform:translate(-50%,-50%)}
+    .cursor.loading::before{width:12px;height:2px}
+    .cursor.loading::after{width:2px;height:12px}
+    @keyframes cursorSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+    @media(hover:none)and(pointer:coarse){.cursor{display:none !important}*,a,button{cursor:auto !important}}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+
+<nav>
+<a href="index.html" class="nav-brand">MINISTRY<br>OF BEAUTIFUL</a>
+<div class="nav-center">
+    <a href="index.html#works">WORKS</a>
+    <a href="index.html#contact">CONTACT</a>
+</div>
+<div class="nav-clock" id="clock"></div>
+</nav>
+
+<div class="back-nav"><a href="index.html#works">← All Works</a></div>
+
+<div class="page-content">
+<div class="project-body">
+
+    <!-- 1. THREE LANDSCAPES -->
+    <div class="row cols-3">
+        <div class="cell r-4-3"><img src="images/project-3/gallery-01.jpg" alt="MOB X MJ / 001"></div>
+        <div class="cell r-4-3"><img src="images/project-3/gallery-02.jpg" alt="MOB X MJ / 002"></div>
+        <div class="cell r-4-3"><img src="images/project-3/gallery-03.jpg" alt="MOB X MJ / 003"></div>
+    </div>
+
+    <!-- 2. TEXT -->
+    <div class="text-section">
+        <div class="col-left">
+            <h2>Style Exploration</h2>
+            <p>Version: V6.1</p>
+        </div>
+        <div class="col-right">
+            <p>World-building, new styles, aesthetic experimentation. If that's the task, Midjourney isn't just the best option, it's the only option.</p>
+        </div>
+    </div>
+
+    <!-- 3. FOUR TALL PORTRAITS -->
+    <div class="row cols-4">
+        <div class="cell r-9-16"><img src="images/project-3/gallery-04.jpg" alt="MOB X MJ / 004"></div>
+        <div class="cell r-9-16"><img src="images/project-3/gallery-05.jpg" alt="MOB X MJ / 005"></div>
+        <div class="cell r-9-16"><img src="images/project-3/gallery-06.jpg" alt="MOB X MJ / 006"></div>
+        <div class="cell r-9-16"><img src="images/project-3/gallery-07.jpg" alt="MOB X MJ / 007"></div>
+    </div>
+
+    <!-- 4. THREE PORTRAITS -->
+    <div class="row cols-3">
+        <div class="cell r-3-4"><img src="images/project-3/gallery-09.jpg" alt="MOB X MJ / 009"></div>
+        <div class="cell r-3-4"><img src="images/project-3/gallery-10.jpg" alt="MOB X MJ / 010"></div>
+        <div class="cell r-3-4"><img src="images/project-3/gallery-11.jpg" alt="MOB X MJ / 011"></div>
+    </div>
+
+    <!-- 5. THREE SQUARES -->
+    <div class="row cols-3">
+        <div class="cell r-1-1"><img src="images/project-3/gallery-13.jpg" alt="MOB X MJ / 013"></div>
+        <div class="cell r-1-1"><img src="images/project-3/gallery-14.jpg" alt="MOB X MJ / 014"></div>
+        <div class="cell r-1-1"><img src="images/project-3/gallery-08.jpg" alt="MOB X MJ / 008"></div>
+    </div>
+
+    <!-- 6. WIDE LANDSCAPE TO CLOSE -->
+    <div class="row cols-1">
+        <div class="cell r-3-2"><img src="images/project-3/gallery-15.jpg" alt="MOB X MJ / 015"></div>
+    </div>
+
+</div>
+
+<nav class="bn">
+    <a href="project-2.html"><div class="nl">← Previous</div><div class="nn">Project 2</div></a>
+    <a href="project-4.html" class="nx"><div class="nl">Next →</div><div class="nn">Project 4</div></a>
+</nav>
+</div>
+
+<script>
+function tick(){var n=new Date(),h=n.getHours(),m=String(n.getMinutes()).padStart(2,'0'),s=String(n.getSeconds()).padStart(2,'0'),ap=h>=12?'PM':'AM';h=h%12;h=h?h:12;document.getElementById('clock').textContent=String(h).padStart(2,'0')+':'+m+':'+s+' '+ap}
+setInterval(tick,1000);tick();
+
+document.querySelectorAll('a[href]').forEach(function(link){
+    var href=link.getAttribute('href');
+    if(href.startsWith('#')||href.startsWith('mailto:')) return;
+    link.addEventListener('click',function(e){
+        if(e.metaKey||e.ctrlKey) return;
+        e.preventDefault();
+        document.body.classList.add('is-leaving');
+        setTimeout(function(){window.location.href=link.href},400);
+    });
+});
+window.addEventListener('pageshow',function(){document.body.classList.remove('is-leaving')});
+</script>
+
+<script>
+(function(){
+    var cursor=document.getElementById('cursor');
+    document.addEventListener('mousemove',function(e){cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px'});
+    document.addEventListener('mouseover',function(e){if(e.target.closest('a,button,[role="button"]'))cursor.classList.add('hover')});
+    document.addEventListener('mouseout',function(e){if(e.target.closest('a,button,[role="button"]'))cursor.classList.remove('hover')});
+    document.querySelectorAll('a[href]').forEach(function(link){var href=link.getAttribute('href');if(href&&!href.startsWith('#')&&!href.startsWith('mailto:'))link.addEventListener('click',function(){cursor.classList.add('loading')})});
+    window.addEventListener('pageshow',function(){cursor.classList.remove('loading')});
+    document.addEventListener('mouseleave',function(){cursor.style.opacity='0'});
+    document.addEventListener('mouseenter',function(){cursor.style.opacity='1'});
+})();
+</script>
+
+
+</body></html>
