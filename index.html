@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,15 +25,48 @@ nav{position:fixed;top:0;width:100%;display:flex;justify-content:space-between;a
 .nav-center a:hover{opacity:.5}
 .nav-clock{font-size:12px;font-weight:700;letter-spacing:.5px}
 
-/* ===== HERO ===== */
-.hero{position:relative;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.hero-video{position:absolute;inset:0;z-index:1}
-.hero-video video{width:100%;height:100%;object-fit:cover}
-.hero-wm{position:relative;z-index:2;text-align:center;user-select:none;pointer-events:none}
-.hero-wm h1{font-size:clamp(60px,11vw,160px);font-weight:500;text-transform:uppercase;color:rgba(255,255,255,.06);line-height:.95;letter-spacing:-6px}
+/* ===== SCROLLYTELLING HERO SYSTEM ===== */
+.scrolly-container {
+  position: relative;
+  height: 180vh; /* Optimized desktop track length */
+  background: #111;
+  z-index: 5;
+}
+.hero {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #111;
+  will-change: transform, opacity;
+}
+.hero canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  will-change: transform;
+}
+.hero-loader {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #555;
+  z-index: 5;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
 
 /* ===== WORKS (Masonry Scatter) ===== */
-.works{padding:100px 44px 0;background:#111;position:relative;z-index:5}
+.works{margin-top:-12vh;padding:100px 44px 0;background:#111;position:relative;z-index:10;box-shadow: 0 -30px 60px rgba(17,17,17,0.95)}
 .works-head{margin-bottom:48px}
 .works-head h2{font-size:28px;font-weight:700;text-transform:uppercase;letter-spacing:-.5px}
 
@@ -54,12 +86,14 @@ nav{position:fixed;top:0;width:100%;display:flex;justify-content:space-between;a
 .item .label{padding:8px 0 0;font-size:12px;font-weight:500;color:#aaa;line-height:1.4;letter-spacing:.2px}
 .item .label span{font-size:11px;font-weight:400;color:#555}
 
-/* Placeholder */
+/* Placeholder styling (Clean original numbered WIP placeholders) */
 .placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:9px;color:rgba(255,255,255,.06)}
 
 /* ===== INFO SECTION ===== */
-.info{position:relative;padding:100px 44px;display:grid;grid-template-columns:55% 45%;background:#111;z-index:5;border-top:1px solid #1a1a1a}
-.info-content{padding-right:60px}
+.info{position:relative;padding:100px 44px;display:grid;grid-template-columns:55% 45%;background:#111;z-index:10;border-top:1px solid #1a1a1a}
+.info-title{grid-column: 1 / -1; margin-bottom: 20px;}
+.info-bio{grid-column: 1; padding-right:60px;}
+.info-career{grid-column: 1; padding-right:60px;}
 .info-row{display:grid;grid-template-columns:160px 1fr;gap:24px;padding:28px 0;border-top:1px solid #1a1a1a}
 .info-label{font-size:11px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:#666;padding-top:3px}
 .info-text{font-size:14px;font-weight:400;color:#bbb;line-height:1.8}
@@ -67,20 +101,19 @@ nav{position:fixed;top:0;width:100%;display:flex;justify-content:space-between;a
 .career-item{font-size:13px;color:#aaa;line-height:2}
 
 /* STICKY PORTRAIT */
-.portrait-col{position:sticky;top:80px;height:calc(55vh - 55px)}
+.portrait-col{grid-column: 2; grid-row: 2 / span 2; position:sticky;top:80px;height:calc(80vh - 55px)}
 .portrait-img{width:100%;height:100%;border-radius:4px;overflow:hidden;background:#1a1a1a}
 .portrait-img img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
-.portrait-placeholder{width:100%;height:100%;background:linear-gradient(180deg,#2a2a2a,#1a1a1a 50%,#222);display:flex;align-items:center;justify-content:center;font-size:10px;color:#333;letter-spacing:3px;text-transform:uppercase}
 
 /* ===== GET IN TOUCH ===== */
-.touch{padding:100px 44px 60px;background:#111;border-top:1px solid #1a1a1a;z-index:5;position:relative}
+.touch{padding:100px 44px 60px;background:#111;border-top:1px solid #1a1a1a;z-index:10;position:relative}
 .touch h2{font-size:28px;font-weight:700;text-transform:uppercase;margin-bottom:24px;letter-spacing:-1px}
 .touch-links{display:flex;gap:32px}
 .touch-links a{font-size:12px;font-weight:500;letter-spacing:.5px;text-transform:uppercase;transition:opacity .25s}
 .touch-links a:hover{opacity:.5}
 
 /* ===== FOOTER ===== */
-footer{padding:40px 44px;border-top:1px solid #1a1a1a;text-align:center}
+footer{padding:40px 44px;border-top:1px solid #1a1a1a;text-align:center;z-index:10;position:relative;background:#111}
 footer p{font-size:10px;color:#333;letter-spacing:1px}
 
 /* ===== ANIMATIONS ===== */
@@ -93,18 +126,60 @@ footer p{font-size:10px;color:#333;letter-spacing:1px}
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:1024px){
-    .info{grid-template-columns:1fr}
-    .portrait-col{display:none}
+    .scrolly-container {
+        height: 150vh; /* Shorter track on tablets for punchier scrolls */
+    }
+    .works {
+        margin-top: -8vh; /* Responsive relaxed overlap transition */
+    }
+    .info{
+        grid-template-columns:1fr;
+        gap: 24px;
+    }
+    .info-bio{
+        grid-column: 1;
+        padding-right: 0;
+        order: 1;
+    }
+    .portrait-col{
+        grid-column: 1;
+        position: relative;
+        top: 0;
+        height: auto;
+        aspect-ratio: 3/4;
+        width: 100%;
+        max-width: 500px;
+        margin: 24px auto;
+        order: 2; /* Repositioned to show below bio info */
+    }
+    .info-career{
+        grid-column: 1;
+        padding-right: 0;
+        order: 3; /* Repositioned to show below the visual portrait */
+    }
     .stage{max-width:100%}
 }
 @media(max-width:768px){
+    .scrolly-container {
+        height: 130vh; /* Tight touch-optimized tracking on mobile */
+    }
+    .works {
+        margin-top: -5vh; /* Responsive relaxed overlap transition */
+    }
+    .portrait-col {
+        max-width: 100%;
+    }
     nav{padding:18px 24px}
     .nav-center{gap:20px}
-    .hero-wm h1{font-size:44px;letter-spacing:-3px}
     .works,.info,.touch{padding-left:24px;padding-right:24px}
     .info-row{grid-template-columns:1fr;gap:8px}
     footer{padding:30px 24px}
     .works-head h2{font-size:22px}
+}
+@media(max-width:550px){
+    .stage {
+        max-width: 100%;
+    }
 }
 @media(max-width:480px){
     .nav-center{gap:14px}
@@ -113,12 +188,53 @@ footer p{font-size:10px;color:#333;letter-spacing:1px}
 
 /* ===== CUSTOM CURSOR ===== */
 *,a,button{cursor:none !important}
-.cursor{position:fixed;top:0;left:0;width:17px;height:17px;background:#c489e2;border-radius:50%;pointer-events:none;z-index:99999;mix-blend-mode:difference;transform:translate(-50%,-50%);transition:width .3s ease,height .3s ease,background .3s ease}
+.cursor{
+  position:fixed;
+  top:0;
+  left:0;
+  width:17px;
+  height:17px;
+  background:#c489e2;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:99999;
+  mix-blend-mode:difference;
+  transform:translate(-50%,-50%);
+  transition:width .3s ease,height .3s ease,background .3s ease,border-radius .3s ease,padding .3s ease,opacity .25s ease;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  opacity:0; /* Hidden initially */
+}
 .cursor.hover{width:38px;height:38px}
 .cursor.loading{width:24px;height:24px;background:transparent;border:2px solid #fff;animation:cursorSpin .8s linear infinite}
 .cursor.loading::before,.cursor.loading::after{content:'';position:absolute;background:#fff;top:50%;left:50%;transform:translate(-50%,-50%)}
 .cursor.loading::before{width:12px;height:2px}
 .cursor.loading::after{width:2px;height:12px}
+
+/* Work In Progress (Capsule State matching thickness/color of hover circle) */
+.cursor.wip-hover {
+  width: 140px;
+  height: 38px; /* Matches thickness/diameter of the bigger hover circle */
+  background: #c489e2; /* Cursor color remains unchanged */
+  border-radius: 19px; /* Rounded pill geometry */
+  mix-blend-mode: difference; /* Retains difference blend mode */
+}
+.cursor-text {
+  display: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #000; /* Legible contrast color inside difference blend mode */
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.cursor.wip-hover .cursor-text {
+  display: block;
+}
+
 @keyframes cursorSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
 @media(hover:none)and(pointer:coarse){.cursor{display:none !important}*,a,button{cursor:auto !important}}
 
@@ -127,7 +243,9 @@ footer p{font-size:10px;color:#333;letter-spacing:1px}
 <body>
 
 <!-- CUSTOM CURSOR -->
-<div class="cursor" id="cursor"></div>
+<div class="cursor" id="cursor" style="opacity: 0;">
+  <span class="cursor-text">WORK IN PROGRESS</span>
+</div>
 
 <!-- NAV — Logo (home) + WORKS + CONTACT -->
 <nav>
@@ -139,15 +257,13 @@ footer p{font-size:10px;color:#333;letter-spacing:1px}
 <div class="nav-clock" id="clock"></div>
 </nav>
 
-<!-- 1. HERO -->
-<section class="hero" id="hero">
-<div class="hero-video">
-<div style="width:100%;height:100%;background:#111"></div>
+<!-- 1. SCROLLYTELLING HERO BANNER CONTAINER -->
+<div class="scrolly-container" id="scrolly-container">
+  <section class="hero" id="hero">
+    <canvas id="scrolly-canvas"></canvas>
+    <div class="hero-loader" id="hero-loader">CACHING SEQUENCE 0%</div>
+  </section>
 </div>
-<div class="hero-wm" id="watermark">
-<h1>MINISTRY<br>OF BEAUTIFUL</h1>
-</div>
-</section>
 
 <!-- 2. WORKS (Masonry Scatter) -->
 <section class="works fade-up" id="works">
@@ -195,7 +311,7 @@ footer p{font-size:10px;color:#333;letter-spacing:1px}
     </a>
     <a href="project-10.html" class="item" data-ratio="3:4">
         <div class="thumb"><div class="placeholder" style="background:linear-gradient(135deg,#ff4500,#cc3300)">010</div></div>
-        <div class="label">the End of August<br><span>2017</span></div>
+        <div class="label">COMIC SERIES 02<br><span>2026</span></div>
     </a>
     <a href="project-11.html" class="item" data-ratio="1:1">
         <div class="thumb"><img src="images/thumbs/project-11-thumb.jpg" alt="Generative"></div>
@@ -203,7 +319,7 @@ footer p{font-size:10px;color:#333;letter-spacing:1px}
     </a>
     <a href="project-12.html" class="item" data-ratio="4:3">
         <div class="thumb"><div class="placeholder" style="background:linear-gradient(135deg,#33691e,#558b2f)">012</div></div>
-        <div class="label">UEFA Champions League Final 2017<br><span>2017</span></div>
+        <div class="label">COMIC SERIES 03<br><span>2026</span></div>
     </a>
     <a href="project-13.html" class="item" data-ratio="3:4">
         <div class="thumb"><img src="images/thumbs/project-13-thumb.jpg" alt="PROCESSING"></div>
@@ -219,11 +335,11 @@ footer p{font-size:10px;color:#333;letter-spacing:1px}
     </a>
     <a href="project-16.html" class="item" data-ratio="3:2">
         <div class="thumb"><div class="placeholder" style="background:linear-gradient(135deg,#2a1a3a,#4a2a5a)">016</div></div>
-        <div class="label">GENERATIVE SERIES 06<br><span>2020</span></div>
+        <div class="label">TOYOTA REVO<br><span>2026</span></div>
     </a>
     <a href="project-17.html" class="item" data-ratio="3:2">
         <div class="thumb"><div class="placeholder" style="background:linear-gradient(135deg,#0a1a0a,#1aff4a)">001</div></div>
-        <div class="label">DON'T BE A FOOL / DARK<br><span>2021</span></div>
+        <div class="label">GENERATIVE SERIES 06<br><span>2026</span></div>
     </a>
      <a href="project-18.html" class="item" data-ratio="1:1">
         <div class="thumb"><img src="images/thumbs/project-18-thumb.jpg" alt="Generative"></div>
@@ -234,23 +350,35 @@ footer p{font-size:10px;color:#333;letter-spacing:1px}
 
 <!-- 3. INFO SECTION -->
 <section class="info fade-up" id="about">
-<div style="grid-column: 1 / -1; margin-bottom: 20px;">
+<div class="info-title">
 <h2 style="font-size:28px;font-weight:700;text-transform:uppercase;letter-spacing:-.5px;">Info</h2>
 </div>
 
-<div class="info-content">
+<!-- Left Main Column (Bio Introduction) -->
+<div class="info-bio">
 <div class="info-row">
     <div class="info-label">What I Do</div>
     <div class="info-text">I shape form and color for a living.</div>
 </div>
 <div class="info-row">
     <div class="info-label">My Background</div>
-    <div class="info-text">Originally from Pakistan, I've been designing identities for 20+ years, partnered with <strong>world-class creative agencies</strong> to deliver high-tier design solutions.</div>
+    <div class="info-text">I've been designing identities for 20+ years, partnered with <strong>world-class creative agencies</strong> to deliver high-tier design solutions.</div>
 </div>
 <div class="info-row">
     <div class="info-label">My Approach</div>
     <div class="info-text">I ask questions, listen closely, and I blend technical precision with artistic intuition to bring brand stories to life. I thrive on mastering emerging technologies and software to create visually stunning, high-impact campaigns.</div>
 </div>
+</div>
+
+<!-- Sticky/Responsive Portrait Column (Repositioned dynamically on Mobile) -->
+<div class="portrait-col">
+<div class="portrait-img">
+    <img src="images/your-portrait.jpg" alt="Design Director Portrait">
+</div>
+</div>
+
+<!-- Left Lower Column (Career History) -->
+<div class="info-career">
 <div class="info-row">
     <div class="info-label">Career</div>
     <div class="info-text">
@@ -261,12 +389,6 @@ footer p{font-size:10px;color:#333;letter-spacing:1px}
         <div class="career-item">(2024 – 2025) Design Director at BBDO Pakistan</div>
         <div class="career-item">(2025 – now) Design Director at Ogilvy Pakistan</div>
     </div>
-</div>
-</div>
-
-<div class="portrait-col">
-<div class="portrait-img">
-    <div class="portrait-placeholder">Your B&W Portrait Here</div>
 </div>
 </div>
 </section>
@@ -292,14 +414,264 @@ function tick(){
 }
 setInterval(tick,1000);tick();
 
-// Parallax watermark on scroll
-window.addEventListener('scroll', function(){
-    var y = window.pageYOffset;
-    var wm = document.getElementById('watermark');
-    if(y < window.innerHeight){
-        wm.style.transform = 'translateY(' + (y * 0.4) + 'px)';
-        wm.style.opacity = 1 - (y / (window.innerHeight * 0.7));
+// Configure image sequences (Updated prefix to match ezgif output)
+const FRAME_SEQUENCES = [
+  { folder: 'images/sequence-inflated', prefix: 'ezgif-frame-', extension: 'jpg', totalFrames: 76 },
+  { folder: 'images/sequence-repel', prefix: 'ezgif-frame-', extension: 'jpg', totalFrames: 79 },
+  { folder: 'images/sequence-spikes', prefix: 'ezgif-frame-', extension: 'jpg', totalFrames: 51 },
+  { folder: 'images/sequence-tube', prefix: 'ezgif-frame-', extension: 'jpg', totalFrames: 91 },
+  { folder: 'images/sequence-kintsugi', prefix: 'ezgif-frame-', extension: 'jpg', totalFrames: 48 }
+];
+
+let selectedSeq = null;
+const preloadedImages = [];
+let loadedCount = 0;
+let isSequenceReady = false;
+
+// Pick random sequence
+function selectRandomSequence() {
+    const randomIndex = Math.floor(Math.random() * FRAME_SEQUENCES.length);
+    selectedSeq = FRAME_SEQUENCES[randomIndex];
+}
+
+// Generate exact path to local frame (Pads index to 3-digits, e.g. 001, 012, 121)
+function getFramePath(seq, index) {
+    const frameNum = String(index).padStart(3, '0');
+    return `${seq.folder}/${seq.prefix}${frameNum}.${seq.extension}`;
+}
+
+// Draw frame respecting adaptive boundary rules
+function drawImageResponsive(ctx, img, canvasW, canvasH) {
+    const imgW = img.naturalWidth || img.width || 300;
+    const imgH = img.naturalHeight || img.height || 150;
+    const imgRatio = imgW / imgH;
+    const isMobile = window.innerWidth <= 1024;
+
+    if (isMobile) {
+        // Solution 02 (90-Degree Clockwise Rotation): Transforms portrait layouts 
+        // to fit vertical phone screens, rendering M rotationally as B
+        ctx.save();
+        ctx.translate(canvasW / 2, canvasH / 2);
+        ctx.rotate(90 * Math.PI / 180);
+
+        // When rotated 90 degrees, dimensions of viewport logic swap
+        const rotCanvasW = canvasH;
+        const rotCanvasH = canvasW;
+        const rotCanvasRatio = rotCanvasW / rotCanvasH;
+
+        let drawW, drawH, drawX, drawY;
+        if (rotCanvasRatio > imgRatio) {
+            drawW = rotCanvasW;
+            drawH = rotCanvasW / imgRatio;
+        } else {
+            drawH = rotCanvasH;
+            drawW = rotCanvasH * imgRatio;
+        }
+        
+        drawX = -drawW / 2;
+        drawY = -drawH / 2;
+
+        ctx.drawImage(img, drawX, drawY, drawW, drawH);
+        ctx.restore();
+    } else {
+        // Desktop: High-impact immersive cover crop
+        const canvasRatio = canvasW / canvasH;
+        let drawW, drawH, drawX, drawY;
+        if (canvasRatio > imgRatio) {
+            drawW = canvasW;
+            drawH = canvasW / imgRatio;
+            drawX = 0;
+            drawY = (canvasH - drawH) / 2;
+        } else {
+            drawW = canvasH * imgRatio;
+            drawH = canvasH;
+            drawX = (canvasW - drawW) / 2;
+            drawY = 0;
+        }
+        ctx.drawImage(img, drawX, drawY, drawW, drawH);
     }
+}
+
+// Preload the chosen sequence and toggle the spinning cursor state
+function preloadSelectedSequence() {
+    const loader = document.getElementById('hero-loader');
+    const cursor = document.getElementById('cursor');
+
+    if (cursor) cursor.classList.add('loading');
+
+    // Pre-allocate array slots to ensure frames map precisely to indices
+    for (let i = 0; i < selectedSeq.totalFrames; i++) {
+        preloadedImages.push(null);
+    }
+
+    let activeConnections = 0;
+    let nextImageIndex = 1;
+    const maxConcurrency = 6; // Perfect connection pool size for Safari WebKit concurrent connection limit
+
+    function startNext() {
+        // Sequentially loads batches of images to avoid locking iPhone Safari thread
+        while (activeConnections < maxConcurrency && nextImageIndex <= selectedSeq.totalFrames) {
+            const index = nextImageIndex;
+            nextImageIndex++;
+            activeConnections++;
+
+            const img = new Image();
+            
+            img.onload = function() {
+                activeConnections--;
+                loadedCount++;
+                const progress = Math.round((loadedCount / selectedSeq.totalFrames) * 100);
+                if (loader) loader.textContent = `CACHING SEQUENCE ${progress}%`;
+
+                // Assign to its correct sequential slot
+                preloadedImages[index - 1] = img;
+
+                if (loadedCount === selectedSeq.totalFrames) {
+                    completePreload();
+                } else {
+                    startNext(); // Pull next image in line
+                }
+            };
+
+            img.onerror = function() {
+                activeConnections--;
+                loadedCount++;
+                preloadedImages[index - 1] = img; // Assign broken frame placeholder to prevent index shifts
+
+                if (loadedCount === selectedSeq.totalFrames) {
+                    completePreload();
+                } else {
+                    startNext();
+                }
+            };
+            
+            img.src = getFramePath(selectedSeq, index);
+        }
+    }
+
+    function completePreload() {
+        isSequenceReady = true;
+        if (loader) {
+            loader.style.opacity = '0';
+            setTimeout(() => loader.remove(), 500);
+        }
+        if (cursor) cursor.classList.remove('loading');
+        triggerInitialRender();
+    }
+
+    // Initialize the throttled loading pipeline
+    startNext();
+}
+
+// High-Performance Scrollytelling & Parallax exit engine
+const canvas = document.getElementById('scrolly-canvas');
+const ctx = canvas.getContext('2d');
+const hero = document.getElementById('hero');
+const scrollyContainer = document.getElementById('scrolly-container');
+
+function resizeCanvas() {
+    // Lock measurements directly to physical container dimensions rather than window viewports.
+    // This blocks rendering shifts and stretch anomalies during dynamic iOS Chrome layout refreshes.
+    canvas.width = Math.floor(hero.offsetWidth * window.devicePixelRatio);
+    canvas.height = Math.floor(hero.offsetHeight * window.devicePixelRatio);
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    renderScrollytelling();
+}
+
+function triggerInitialRender() {
+    // Delayed call execution allows native tablet/mobile browser height and width elements 
+    // to complete stabilization passes and fixes the first-frame stretch bug.
+    setTimeout(() => {
+        resizeCanvas();
+        startTickEngine();
+    }, 80);
+}
+
+function renderScrollytelling() {
+    if (!isSequenceReady || preloadedImages.length === 0) return;
+
+    const containerRect = scrollyContainer.getBoundingClientRect();
+    const scrollHeight = Math.max(1, containerRect.height - window.innerHeight);
+    const scrollOffset = -containerRect.top;
+    
+    // Normalize scroll progress (0.0 to 1.0) strictly inside scrolly-container track
+    let p = scrollOffset / scrollHeight;
+    p = Math.max(0, Math.min(1, p));
+
+    // Feathered progressive cutoff limit (Fades gradually starting at 65% scroll track)
+    const animationCutoff = 0.65;
+
+    // Phase 1: Scroll Playback (0% to 100% scroll progress mapping)
+    let frameIndex = 0;
+    if (p <= animationCutoff) {
+        const progressPhase1 = p / animationCutoff;
+        frameIndex = Math.floor(progressPhase1 * (selectedSeq.totalFrames - 1));
+    } else {
+        frameIndex = selectedSeq.totalFrames - 1; // Hold final frame
+    }
+
+    // Clear and draw active frame inside scaled coordinate frame
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const activeFrame = preloadedImages[frameIndex];
+    if (activeFrame && activeFrame.complete) {
+        drawImageResponsive(ctx, activeFrame, canvas.width / window.devicePixelRatio, canvas.height / window.devicePixelRatio);
+    }
+
+    // Phase 2: Beautiful Progressive Feathered Parallax Exit
+    if (p > animationCutoff) {
+        const progressPhase2 = (p - animationCutoff) / (1 - animationCutoff);
+        
+        // Easing transition factor to prevent harsh cuts
+        const easedProgress = Math.pow(progressPhase2, 1.5);
+        
+        const scale = 1 - (easedProgress * 0.08);   // Soft cinematic scale down
+        const opacity = 1 - easedProgress;          // Smooth, gradual fade out
+        const translateY = -(easedProgress * 60);    // Gentle upward translation offset
+
+        hero.style.transform = `scale(${scale}) translateY(${translateY}px)`;
+        hero.style.opacity = opacity;
+    } else {
+        hero.style.transform = 'scale(1) translateY(0px)';
+        hero.style.opacity = '1';
+    }
+}
+
+// Continuous requestAnimationFrame Loop: Monitors scroll updates natively at 60fps
+// without hitting event lags or scroll freezes on Android, tablets, or iOS devices.
+let lastScrollY = -1;
+let tickEngineRunning = false;
+
+function startTickEngine() {
+    if (tickEngineRunning) return;
+    tickEngineRunning = true;
+    
+    function tick() {
+        if (isSequenceReady) {
+            const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+            const expectedW = Math.floor(hero.offsetWidth * window.devicePixelRatio);
+            const expectedH = Math.floor(hero.offsetHeight * window.devicePixelRatio);
+            
+            // Recalibrate canvas layout properties dynamically using strict CSS bounds
+            if (canvas.width !== expectedW || canvas.height !== expectedH || currentScroll !== lastScrollY) {
+                lastScrollY = currentScroll;
+                
+                if (canvas.width !== expectedW || canvas.height !== expectedH) {
+                    canvas.width = expectedW;
+                    canvas.height = expectedH;
+                    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+                }
+                renderScrollytelling();
+            }
+        }
+        requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+}
+
+// Run sequence preloading after DOM is fully constructed
+document.addEventListener('DOMContentLoaded', function() {
+    selectRandomSequence();
+    preloadSelectedSequence();
 });
 
 // Fade-in sections on scroll
@@ -329,9 +701,9 @@ document.querySelectorAll('.fade-up').forEach(function(el){ obs.observe(el); });
     var labelHeight = 40;
 
     function getCols(){
-        if(window.matchMedia('(max-width: 550px)').matches) return 2;
-        if(window.matchMedia('(max-width: 768px)').matches) return 3;
-        if(window.matchMedia('(max-width: 1024px)').matches) return 4;
+        // Restored double columns (2 columns grid layout) on mobile screens
+        if(window.matchMedia('(max-width: 768px)').matches) return 2;
+        if(window.matchMedia('(max-width: 1024px)').matches) return 3;
         return 5;
     }
 
@@ -442,11 +814,19 @@ document.querySelectorAll('.fade-up').forEach(function(el){ obs.observe(el); });
 })();
 </script>
 
-<!-- PAGE EXIT (for project links) -->
+<!-- PAGE EXIT (for project links) & LOGO SCROLL RESET -->
 <script>
+// Prevent link triggers on WIP components
 document.querySelectorAll('a.item').forEach(function(link){
     link.addEventListener('click', function(e){
         if(e.metaKey || e.ctrlKey) return;
+        
+        // Prevent click if there is a placeholder inside (Work In Progress)
+        if (this.querySelector('.placeholder')) {
+            e.preventDefault();
+            return;
+        }
+
         e.preventDefault();
         var destination = this.href;
         document.body.classList.add('page-exit');
@@ -454,35 +834,100 @@ document.querySelectorAll('a.item').forEach(function(link){
     });
 });
 window.addEventListener('pageshow', function(){ document.body.classList.remove('page-exit'); });
+
+// Force reliable scroll-to-top when clicking the logo brand
+document.querySelectorAll('.nav-brand').forEach(function(brandLink) {
+    brandLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+});
 </script>
 
 <!-- CUSTOM CURSOR -->
 <script>
 (function(){
     var cursor = document.getElementById('cursor');
-    document.addEventListener('mousemove', function(e){
+    var activeTimeout = null;
+    
+    // Check for pointer event validation. PointerEvents cleanly filter touch/pen pressure inputs 
+    // to block sticky cursor artifacts from displaying on mobile and tablet platforms.
+    document.addEventListener('pointermove', function(e){
+        if (e.pointerType !== 'mouse') {
+            cursor.style.opacity = '0';
+            return;
+        }
         cursor.style.left = e.clientX + 'px';
         cursor.style.top = e.clientY + 'px';
+        cursor.style.opacity = '1';
     });
-    document.addEventListener('mouseover', function(e){
-        if(e.target.closest('a, button, .item, [role="button"]')){
-            cursor.classList.add('hover');
+    
+    document.addEventListener('pointerover', function(e){
+        if (e.pointerType !== 'mouse') return;
+        
+        var target = e.target.closest('a, button, .item, [role="button"]');
+        if(target){
+            // If item has a placeholder, trigger WIP state
+            if(target.classList.contains('item') && target.querySelector('.placeholder')) {
+                cursor.classList.add('wip-hover');
+            } else {
+                cursor.classList.add('hover');
+            }
         }
     });
-    document.addEventListener('mouseout', function(e){
-        if(e.target.closest('a, button, .item, [role="button"]')){
+    
+    document.addEventListener('pointerout', function(e){
+        if (e.pointerType !== 'mouse') return;
+        
+        var target = e.target.closest('a, button, .item, [role="button"]');
+        if(target){
             cursor.classList.remove('hover');
+            cursor.classList.remove('wip-hover');
         }
     });
+
+    // Reset touch-bound custom cursor completely on scroll transitions
+    window.addEventListener('scroll', function() {
+        cursor.style.opacity = '0';
+        cursor.classList.remove('hover');
+        cursor.classList.remove('wip-hover');
+        clearTimeout(activeTimeout);
+    });
+    
     document.querySelectorAll('a[href]').forEach(function(link){
         var href = link.getAttribute('href');
         if(href && !href.startsWith('#') && !href.startsWith('mailto:')){
-            link.addEventListener('click', function(){ cursor.classList.add('loading'); });
+            link.addEventListener('click', function(e){ 
+                // Skip loading state if item is a placeholder
+                if (link.querySelector('.placeholder')) {
+                    e.preventDefault();
+                    return;
+                }
+                
+                // Only trigger the custom cursor loading state if the cursor is active (non-touch)
+                if (window.getComputedStyle(cursor).opacity !== '0' && !window.matchMedia('(pointer: coarse)').matches) {
+                    cursor.classList.add('loading'); 
+                }
+            });
         }
     });
-    window.addEventListener('pageshow', function(){ cursor.classList.remove('loading'); });
-    document.addEventListener('mouseleave', function(){ cursor.style.opacity='0'; });
-    document.addEventListener('mouseenter', function(){ cursor.style.opacity='1'; });
+    
+    window.addEventListener('pageshow', function(){ 
+        cursor.classList.remove('loading'); 
+        cursor.classList.remove('wip-hover'); 
+        cursor.classList.remove('hover'); 
+        cursor.style.opacity = '0';
+    });
+    
+    document.addEventListener('pointerleave', function(){ cursor.style.opacity='0'; });
+    document.addEventListener('pointerenter', function(e){ 
+        if (e.pointerType === 'mouse') {
+            cursor.style.opacity='1'; 
+        }
+    });
 })();
 </script>
 
