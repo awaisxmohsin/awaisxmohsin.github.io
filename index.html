@@ -236,7 +236,7 @@ footer p{font-size:10px;color:#333;letter-spacing:1px}
 }
 
 @keyframes cursorSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
-@media(hover:none)and(pointer:coarse){.cursor{display:none !important}*,a,button{cursor:auto !important}}
+@media(hover:none)and(pointer:coarse){.cursor{display:none !important}.cursor.wip-visible-mobile{display:flex !important}*,a,button{cursor:auto !important}}
 
 </style>
 </head>
@@ -398,7 +398,7 @@ footer p{font-size:10px;color:#333;letter-spacing:1px}
 <h2>Get In Touch</h2>
 <div class="touch-links">
 <a href="mailto:awaisxmohsin@gmail.com">EMAIL</a>
-<a href="#">INSTAGRAM</a>
+<!-- <a href="#">INSTAGRAM</a> -->
 </div>
 </section>
 
@@ -587,6 +587,7 @@ function triggerInitialRender() {
     }, 80);
 }
 
+// Frame sequence renderer logic
 function renderScrollytelling() {
     if (!isSequenceReady || preloadedImages.length === 0) return;
 
@@ -816,8 +817,41 @@ document.querySelectorAll('.fade-up').forEach(function(el){ obs.observe(el); });
 
 <!-- PAGE EXIT (for project links) & LOGO SCROLL RESET -->
 <script>
-// Prevent link triggers on WIP components
+// Prevent link triggers on WIP components & show temporary mobile/desktop capsule feedback
 document.querySelectorAll('a.item').forEach(function(link){
+    var isWipAnimating = false;
+
+    // If it's a Work In Progress placeholder
+    if (link.querySelector('.placeholder')) {
+        link.addEventListener('pointerdown', function(e) {
+            if (isWipAnimating) return;
+            isWipAnimating = true;
+            window.isWipShowing = true;
+
+            var cursor = document.getElementById('cursor');
+            
+            // Position the capsule at the touch/pointer coordinate
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            // Add classes to show the capsule
+            cursor.classList.add('wip-hover');
+            cursor.classList.add('wip-visible-mobile');
+            cursor.style.opacity = '1';
+
+            // Fade out after 1.2 seconds
+            setTimeout(function() {
+                cursor.style.opacity = '0';
+                setTimeout(function() {
+                    cursor.classList.remove('wip-hover');
+                    cursor.classList.remove('wip-visible-mobile');
+                    isWipAnimating = false;
+                    window.isWipShowing = false;
+                }, 300); // Wait for CSS transition opacity .25s to finish
+            }, 1200);
+        });
+    }
+
     link.addEventListener('click', function(e){
         if(e.metaKey || e.ctrlKey) return;
         
@@ -856,6 +890,7 @@ document.querySelectorAll('.nav-brand').forEach(function(brandLink) {
     // Check for pointer event validation. PointerEvents cleanly filter touch/pen pressure inputs 
     // to block sticky cursor artifacts from displaying on mobile and tablet platforms.
     document.addEventListener('pointermove', function(e){
+        if (window.isWipShowing) return;
         if (e.pointerType !== 'mouse') {
             cursor.style.opacity = '0';
             return;
@@ -866,6 +901,7 @@ document.querySelectorAll('.nav-brand').forEach(function(brandLink) {
     });
     
     document.addEventListener('pointerover', function(e){
+        if (window.isWipShowing) return;
         if (e.pointerType !== 'mouse') return;
         
         var target = e.target.closest('a, button, .item, [role="button"]');
@@ -880,6 +916,7 @@ document.querySelectorAll('.nav-brand').forEach(function(brandLink) {
     });
     
     document.addEventListener('pointerout', function(e){
+        if (window.isWipShowing) return;
         if (e.pointerType !== 'mouse') return;
         
         var target = e.target.closest('a, button, .item, [role="button"]');
@@ -891,6 +928,7 @@ document.querySelectorAll('.nav-brand').forEach(function(brandLink) {
 
     // Reset touch-bound custom cursor completely on scroll transitions
     window.addEventListener('scroll', function() {
+        if (window.isWipShowing) return;
         cursor.style.opacity = '0';
         cursor.classList.remove('hover');
         cursor.classList.remove('wip-hover');
