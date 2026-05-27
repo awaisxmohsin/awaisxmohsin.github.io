@@ -821,16 +821,20 @@ document.querySelectorAll('.fade-up').forEach(function(el){ obs.observe(el); });
 document.querySelectorAll('a.item').forEach(function(link){
     var isWipAnimating = false;
 
-    // If it's a Work In Progress placeholder
-    if (link.querySelector('.placeholder')) {
-        link.addEventListener('pointerdown', function(e) {
+    link.addEventListener('click', function(e){
+        if(e.metaKey || e.ctrlKey) return;
+        
+        // Prevent click and show capsule if there is a placeholder inside (Work In Progress)
+        if (this.querySelector('.placeholder')) {
+            e.preventDefault();
+            
             if (isWipAnimating) return;
             isWipAnimating = true;
             window.isWipShowing = true;
 
             var cursor = document.getElementById('cursor');
             
-            // Position the capsule at the touch/pointer coordinate
+            // Position the capsule at the exact click/tap coordinate
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
             
@@ -849,15 +853,7 @@ document.querySelectorAll('a.item').forEach(function(link){
                     window.isWipShowing = false;
                 }, 300); // Wait for CSS transition opacity .25s to finish
             }, 1200);
-        });
-    }
-
-    link.addEventListener('click', function(e){
-        if(e.metaKey || e.ctrlKey) return;
-        
-        // Prevent click if there is a placeholder inside (Work In Progress)
-        if (this.querySelector('.placeholder')) {
-            e.preventDefault();
+            
             return;
         }
 
