@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>11 Prop — Ministry of Beautiful</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<title>LOGOFOLIO — Ministry of Beautiful</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
 <style>
     *{margin:0;padding:0;box-sizing:border-box}
     html{scroll-behavior:smooth}
@@ -12,7 +11,6 @@
     body.is-leaving{opacity:0;transform:translateY(-20px)}
     a{color:inherit;text-decoration:none}
 
-    /* NAV */
     nav{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:24px 44px;z-index:100;background:rgba(17,17,17,.95);backdrop-filter:blur(12px);border-bottom:1px solid #1a1a1a}
     .nav-brand{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;line-height:1.4;transition:opacity .25s}
     .nav-brand:hover{opacity:.6}
@@ -21,65 +19,66 @@
     .nav-center a:hover{opacity:.5}
     .nav-clock{font-size:12px;font-weight:700;letter-spacing:.5px}
 
-    /* BACK NAV */
     .back-nav{padding:20px 44px}
     .back-nav a{font-size:11px;color:#666;transition:color .25s}
     .back-nav a:hover{color:#fff}
 
-    /* PAGE ENTRY */
     .page-content{opacity:0;transform:translateY(30px);animation:fadeInUp .8s .1s ease forwards}
     @keyframes fadeInUp{to{opacity:1;transform:translateY(0)}}
 
-    /* ===== CONTENT WRAPPER ===== */
-    .project-body{padding:0 44px 0}
+    .project-body{padding:0 44px}
 
-    /* ===== IMAGE PAIR (two side-by-side with gap) ===== */
-    .img-duo{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
-    .img-duo .img-cell{aspect-ratio:3/4;overflow:hidden;background:#1a1a1a}
-    .img-duo .img-cell img{width:100%;height:100%;object-fit:cover;display:block}
+    /* IMAGE ROWS */
+    .row{display:grid;gap:10px;margin-bottom:10px}
+    .row.cols-1{grid-template-columns:1fr}
+    .row.cols-2{grid-template-columns:1fr 1fr}
+    .row.cols-3{grid-template-columns:1fr 1fr 1fr}
+    .row.cols-4{grid-template-columns:1fr 1fr 1fr 1fr}
 
-    /* ===== SINGLE IMAGE (full width within padding) ===== */
-    .img-single{width:100%;overflow:hidden;background:#1a1a1a;margin-bottom:10px}
-    .img-single.landscape{aspect-ratio:16/9}
-    .img-single.wide{aspect-ratio:21/9}
-    .img-single.standard{aspect-ratio:3/2}
-    .img-single img{width:100%;height:100%;object-fit:cover;display:block}
+    .cell{overflow:hidden;background:#1a1a1a}
+    .cell.r-1-1{aspect-ratio:1/1}
+    .cell.r-3-4{aspect-ratio:3/4}
+    .cell.r-4-3{aspect-ratio:4/3}
+    .cell.r-16-9{aspect-ratio:16/9}
+    .cell.r-9-16{aspect-ratio:9/16}
+    .cell.r-2-3{aspect-ratio:2/3}
+    .cell.r-3-2{aspect-ratio:3/2}
 
-    /* ===== PLACEHOLDER ===== */
-    .ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:9px;color:rgba(255,255,255,.04);letter-spacing:2px;text-transform:uppercase}
+    .cell img{width:100%;height:100%;object-fit:cover;display:block}
 
-    /* ===== TEXT SECTION (headline left, body right) ===== */
+    /* TEXT SECTION */
     .text-section{display:grid;grid-template-columns:1fr 1fr;gap:80px;padding:100px 0;align-items:start}
     .text-section .col-left h2{font-size:clamp(24px,3.5vw,38px);font-weight:700;line-height:1.25;letter-spacing:-.5px;color:#fff}
+    .text-section .col-left p{font-size:13px;font-weight:400;color:#666;margin-top:8px}
     .text-section .col-right{padding-top:6px}
     .text-section .col-right p{font-size:14px;font-weight:400;color:#888;line-height:2;margin-bottom:18px}
     .text-section .col-right p:last-child{margin-bottom:0}
 
-    /* ===== PREV / NEXT ===== */
-    .bn{display:flex;justify-content:space-between;align-items:center;padding:60px 0;border-top:1px solid #1a1a1a;margin-top:60px}
+    /* PREV / NEXT */
+    .bn{display:flex;justify-content:space-between;align-items:center;padding:60px 44px;border-top:1px solid #1a1a1a;margin-top:60px}
     .bn a{transition:opacity .25s}
     .bn a:hover{opacity:.7}
     .nl{font-size:9px;text-transform:uppercase;letter-spacing:3px;color:#444;margin-bottom:6px}
     .nn{font-size:16px;font-weight:500;color:#888}
     .bn .nx{text-align:right}
 
-    /* RESPONSIVE */
     @media(max-width:768px){
         nav{padding:18px 24px}
-        .nav-center{gap:20px}
         .back-nav{padding:16px 24px}
         .project-body{padding:0 24px}
-        .img-duo{grid-template-columns:1fr;gap:10px}
+        .row.cols-4{grid-template-columns:1fr 1fr}
+        .row.cols-3{grid-template-columns:1fr}
         .text-section{grid-template-columns:1fr;gap:30px;padding:60px 0}
-        .bn{flex-direction:column;gap:28px;text-align:center;padding:40px 0}
+        .bn{padding:40px 24px;flex-direction:column;gap:28px;text-align:center}
         .bn .nx{text-align:center}
     }
     @media(max-width:480px){
         .nav-center{gap:14px}
         .nav-center a,.nav-brand,.nav-clock{font-size:10px}
+        .row.cols-2{grid-template-columns:1fr}
     }
 
-/* ===== CUSTOM CURSOR ===== */
+    /* ===== CUSTOM CURSOR ===== */
 .cursor {
     position: fixed;
     top: 0;
@@ -119,11 +118,8 @@ body.has-mouse *, body.has-mouse a, body.has-mouse button {
 </style>
 </head>
 <body>
-
-<!-- CUSTOM CURSOR -->
 <div class="cursor" id="cursor"></div>
 
-<!-- NAV -->
 <nav>
 <a href="index.html" class="nav-brand">MINISTRY<br>OF BEAUTIFUL</a>
 <div class="nav-center">
@@ -133,107 +129,67 @@ body.has-mouse *, body.has-mouse a, body.has-mouse button {
 <div class="nav-clock" id="clock"></div>
 </nav>
 
-<!-- BACK LINK -->
-<div class="back-nav">
-<a href="index.html#works">← All Works</a>
-</div>
+<div class="back-nav"><a href="index.html#works">← All Works</a></div>
 
-<!-- PAGE CONTENT -->
 <div class="page-content">
 <div class="project-body">
 
-     <!-- 1. ONE HORIZONTAL IMAGE -->
-    <div class="img-single landscape">
-        <img src="images/project-2/gallery-01.jpg" alt="11 Prop brand spread">
-        <!-- <div class="ph" style="background:#1a1a2a"></div> -->
-    </div>
-    
-    
-    <!-- 2. TWO BIG IMAGES SIDE BY SIDE (portrait, with gap) -->
-    <div class="img-duo">
-        <div class="img-cell">
-            <img src="images/project-2/gallery-02.jpg" alt="11 Prop">
-            <!--<div class="ph" style="background:#1a1a2a"></div> -->
-        </div>
-        <div class="img-cell">
-            <img src="images/project-2/gallery-03.jpg" alt="11 Prop">
-        </div>
-    </div>
-    
+    <!-- 1. WIDE LANDSCAPE
+    <div class="row cols-1">
+        <div class="cell r-1-1"><img src="images/project-7/gallery-01.jpg" alt="Elder Bits / 01"></div>
+    </div> -->
 
-    <!-- 3. TEXT — bold left, regular right -->
-    <div class="text-section">
+     <!-- 2. THREE SQUARES -->
+    <div class="row cols-3">
+        <div class="cell r-1-1"><img src="images/project-10/gallery-01.jpg" alt="ONE CAPITAL"></div>
+        <div class="cell r-1-1"><img src="images/project-10/gallery-02.jpg" alt="easypaisa"></div>
+        <div class="cell r-1-1"><img src="images/project-10/gallery-03.jpg" alt="Folklore"></div>
+    </div>
+
+    <!-- 2. TEXT -->
+    <!-- <div class="text-section">
         <div class="col-left">
-            <p>Client: 11prop</p>
-            <p>Location: Dubai</p>
-            <p>Services: Brand Identity</p>
+            <h2>RAM-Pa & The Elder Bits</h2>
+            <p>8bits</p>
         </div>
         <div class="col-right">
-            <p>11 Prop is a forward-thinking real estate brand with a compelling vision: to become the ultimate global destination for comprehensive real estate solutions. Their innovative approach leverages cutting-edge AI tools and technology to deliver unparalleled services.</p>
-            <!--<p>We crafted an identity system that balances premium confidence with approachable warmth. Clean geometry, considered colour, and a flexible mark that works from signage to social. Every touchpoint designed to build trust at first glance.</p> -->
+            <p>Ram-Pa & The Elder Bits is all about progressive reduction. I reduced the design world in smallest units of artistic expression. Beautiful people - things - memories living on 32x32 pixel.</p>
         </div>
+    </div> -->
+
+    <!-- 3. THREE SQUARES -->
+    <div class="row cols-3">
+        <div class="cell r-1-1"><img src="images/project-10/gallery-04.jpg" alt="Bliss"></div>
+        <div class="cell r-1-1"><img src="images/project-10/gallery-05.jpg" alt="Liberate"></div>
+        <div class="cell r-1-1"><img src="images/project-10/gallery-06.jpg" alt="Path Finder"></div>
     </div>
 
-     <!-- 4. ONE HORIZONTAL IMAGE -->
-    <div class="img-single landscape">
-        <img src="images/project-2/gallery-04.jpg" alt="11 Prop brand spread">
-        <!-- <div class="ph" style="background:#1a1a2a"></div> -->
+     <!-- 4. TWO SQUARES -->
+    <!-- <div class="row cols-2">
+        <div class="cell r-1-1"><img src="images/project-7/gallery-07.jpg" alt="Elder Bits / 08"></div>
+        <div class="cell r-1-1"><img src="images/project-7/gallery-08.jpg" alt="Elder Bits / 09"></div>
+    </div> -->
+
+     <!-- 5. THREE SQUARES -->
+    <div class="row cols-3">
+        <div class="cell r-1-1"><img src="images/project-10/gallery-07.jpg" alt="The Fort"></div>
+        <div class="cell r-1-1"><img src="images/project-10/gallery-08.jpg" alt="JS"></div>
+        <div class="cell r-1-1"><img src="images/project-10/gallery-09.jpg" alt="Trinity"></div>
     </div>
 
-    <!-- 5. TWO IMAGES SIDE BY SIDE -->
-    <div class="img-duo">
-        <div class="img-cell">
-            <img src="images/project-2/gallery-05.jpg" alt="11 Prop brand spread">
-            <!-- <div class="ph" style="background:#1a1a2a"></div> -->
-        </div>
-        <div class="img-cell">
-            <img src="images/project-2/gallery-06.jpg" alt="Application 2">
-            <!-- <div class="ph" style="background:#1a1a2a"></div> -->
-        </div>
-    </div>
-
-    <!-- 6. ONE HORIZONTAL IMAGE -->
-    <div class="img-single landscape">
-        <img src="images/project-2/gallery-07.jpg" alt="Brand environment"> -->
-        <!--<div class="ph" style="background:#1a1a2a"></div> -->
-    </div>
-
-    <!-- 7. TEXT — second beat -->
-    <div class="text-section">
-        <div class="col-left">
-            <h2>We’re modern & bold yet grounded. Loud yet calm. Confident yet relatable. It’s what sets us apart.</h2>
-        </div>
-        <div class="col-right">
-            <p>Embodying strength and modernity, we display inspiration, style, and reliability. Our brand ethos is built on the foundation of trust, fostering lasting connections with our clients.</p>
-        </div>
-    </div>
-
-    <!-- 8. TWO IMAGES SIDE BY SIDE -->
-    <div class="img-duo">
-        <div class="img-cell">
-            <img src="images/project-2/gallery-08.jpg" alt="Application 2">
-        </div>
-        <div class="img-cell">
-            <img src="images/project-2/gallery-09.jpg" alt="Application 2">
-        </div>
-    </div>
-
-    <!-- 9. ONE FINAL IMAGE -->
-    <div class="img-single standard">
-        <img src="images/project-2/gallery-10.jpg" alt="Application 2">
-        <!--<div class="ph" style="background:#1a1a2a"></div> -->
-    </div>
-
-    <!-- PREV / NEXT -->
-    <nav class="bn">
-        <a href="project-1.html"><div class="nl">← Previous</div><div class="nn">WEIRDLY WONDERFUL / VELO</div></a>
-        <a href="project-3.html" class="nx"><div class="nl">Next →</div><div class="nn">MOB X MJ / 001-015</div></a>
-    </nav>
-
-</div>
+     <!-- 6. TWO SQUARES -->
+    <!-- <div class="row cols-2">
+        <div class="cell r-1-1"><img src="images/project-7/gallery-12.jpg" alt="Elder Bits / 08"></div>
+        <div class="cell r-1-1"><img src="images/project-7/gallery-13.jpg" alt="Elder Bits / 09"></div>
+    </div> -->
 </div>
 
-<!-- JAVASCRIPT -->
+<nav class="bn">
+    <a href="project-11.html"><div class="nl">← Previous</div><div class="nn">Generative Series 04 / 001-017</div></a>
+    <a href="project-13.html" class="nx"><div class="nl">Next →</div><div class="nn">MOB X PROCESSING / 001-009</div></a>
+</nav>
+</div>
+
 <script>
 (function(){
 var cursor = document.getElementById('cursor');
@@ -294,8 +250,33 @@ document.addEventListener('mouseleave', function(){
 document.addEventListener('mouseenter', function(){ 
     if(hasMouse) cursor.style.opacity='1'; 
 });
+
+// Digital Clock Logic (populates the #clock container)
+function initClock() {
+    var clockEl = document.getElementById('clock');
+    if (!clockEl) return;
+    
+    function updateTime() {
+        var now = new Date();
+        var hours = now.getHours();
+        var minutes = now.getMinutes();
+        var seconds = now.getSeconds();
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        
+        hours = hours % 12;
+        hours = hours ? hours : 12; // Formats '0' to '12'
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        
+        clockEl.textContent = hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+    }
+    updateTime();
+    setInterval(updateTime, 1000);
+}
+initClock();
+
 })();
 </script>
 
-</body>
-</html>
+
+</body></html>

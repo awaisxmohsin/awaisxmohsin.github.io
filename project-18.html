@@ -34,7 +34,7 @@
     .row.cols-3{grid-template-columns:1fr 1fr 1fr}
     .row.cols-4{grid-template-columns:1fr 1fr 1fr 1fr}
 
-    .cell{overflow:hidden;background:#1a1a1a}
+    .cell{overflow:hidden;background:#1a1a1a; min-width:0; min-height:0}
     .cell.r-1-1{aspect-ratio:1/1}
     .cell.r-3-4{aspect-ratio:3/4}
     .cell.r-4-3{aspect-ratio:4/3}
@@ -42,6 +42,7 @@
     .cell.r-9-16{aspect-ratio:9/16}
     .cell.r-2-3{aspect-ratio:2/3}
     .cell.r-3-2{aspect-ratio:3/2}
+    .cell.r-4-2{aspect-ratio:4/2}
 
     .cell img{width:100%;height:100%;object-fit:cover;display:block}
 
@@ -77,16 +78,43 @@
         .row.cols-2{grid-template-columns:1fr}
     }
 
-    /* CUSTOM CURSOR */
-    *,a,button{cursor:none !important}
-    .cursor{position:fixed;top:0;left:0;width:17px;height:17px;background:#c489e2;border-radius:50%;pointer-events:none;z-index:99999;mix-blend-mode:difference;transform:translate(-50%,-50%);transition:width .3s ease,height .3s ease,background .3s ease}
-    .cursor.hover{width:38px;height:38px}
-    .cursor.loading{width:24px;height:24px;background:transparent;border:2px solid #fff;animation:cursorSpin .8s linear infinite}
-    .cursor.loading::before,.cursor.loading::after{content:'';position:absolute;background:#fff;top:50%;left:50%;transform:translate(-50%,-50%)}
-    .cursor.loading::before{width:12px;height:2px}
-    .cursor.loading::after{width:2px;height:12px}
-    @keyframes cursorSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
-    @media(hover:none)and(pointer:coarse){.cursor{display:none !important}*,a,button{cursor:auto !important}}
+    /* ===== CUSTOM CURSOR ===== */
+.cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 17px;
+    height: 17px;
+    background: #c489e2;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    mix-blend-mode: difference;
+    transform: translate(-50%, -50%);
+    transition: width .3s ease, height .3s ease, background .3s ease;
+    
+    /* Hide the custom cursor by default on all devices */
+    display: none; 
+}
+.cursor.hover{width:38px;height:38px}
+.cursor.loading{width:24px;height:24px;background:transparent;border:2px solid #fff;animation:cursorSpin .8s linear infinite}
+.cursor.loading::before,.cursor.loading::after{content:'';position:absolute;background:#fff;top:50%;left:50%;transform:translate(-50%,-50%)}
+.cursor.loading::before{width:12px;height:2px}
+.cursor.loading::after{width:2px;height:12px}
+@keyframes cursorSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+
+/* Only display custom cursor and hide default cursor when a physical mouse is used */
+body.has-mouse .cursor {
+    display: block;
+}
+body.has-mouse *, body.has-mouse a, body.has-mouse button {
+    cursor: none !important;
+}
+
+/* Ensure default cursors are active on mobile/tablet */
+*, a, button {
+    cursor: auto;
+}
 </style>
 </head>
 <body>
@@ -170,14 +198,62 @@ window.addEventListener('pageshow',function(){document.body.classList.remove('is
 
 <script>
 (function(){
-    var cursor=document.getElementById('cursor');
-    document.addEventListener('mousemove',function(e){cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px'});
-    document.addEventListener('mouseover',function(e){if(e.target.closest('a,button,[role="button"]'))cursor.classList.add('hover')});
-    document.addEventListener('mouseout',function(e){if(e.target.closest('a,button,[role="button"]'))cursor.classList.remove('hover')});
-    document.querySelectorAll('a[href]').forEach(function(link){var href=link.getAttribute('href');if(href&&!href.startsWith('#')&&!href.startsWith('mailto:'))link.addEventListener('click',function(){cursor.classList.add('loading')})});
-    window.addEventListener('pageshow',function(){cursor.classList.remove('loading')});
-    document.addEventListener('mouseleave',function(){cursor.style.opacity='0'});
-    document.addEventListener('mouseenter',function(){cursor.style.opacity='1'});
+var cursor = document.getElementById('cursor');
+var hasMouse = false;
+
+// If a touch event occurs first, disable custom cursor activation completely
+window.addEventListener('touchstart', function onFirstTouch() {
+    window.removeEventListener('mousemove', onMouseMoveActivate);
+}, { passive: true });
+
+function onMouseMoveActivate(e) {
+    // A physical mouse movement was detected, enable custom cursor styles
+    document.body.classList.add('has-mouse');
+    hasMouse = true;
+    
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    
+    window.removeEventListener('mousemove', onMouseMoveActivate);
+    
+    document.addEventListener('mousemove', function(e){
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+    });
+}
+
+// Listen for mouse movement to activate
+window.addEventListener('mousemove', onMouseMoveActivate);
+
+document.addEventListener('mouseover', function(e){
+    if(!hasMouse) return;
+    if(e.target.closest('a, button, [role="button"]')){
+        cursor.classList.add('hover');
+    }
+});
+document.addEventListener('mouseout', function(e){
+    if(!hasMouse) return;
+    if(e.target.closest('a, button, [role="button"]')){
+        cursor.classList.remove('hover');
+    }
+});
+document.querySelectorAll('a[href]').forEach(function(link){
+    var href = link.getAttribute('href');
+    if(href && !href.startsWith('#') && !href.startsWith('mailto:')){
+        link.addEventListener('click', function(){ 
+            if(hasMouse) cursor.classList.add('loading'); 
+        });
+    }
+});
+window.addEventListener('pageshow', function(){ 
+    if(cursor) cursor.classList.remove('loading'); 
+});
+document.addEventListener('mouseleave', function(){ 
+    if(hasMouse) cursor.style.opacity='0'; 
+});
+document.addEventListener('mouseenter', function(){ 
+    if(hasMouse) cursor.style.opacity='1'; 
+});
 })();
 </script>
 

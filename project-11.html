@@ -54,15 +54,43 @@
         .nav-center a,.nav-brand,.nav-clock{font-size:10px}
     }
 
-*,a,button{cursor:none !important}
-.cursor{position:fixed;top:0;left:0;width:17px;height:17px;background:#c489e2;border-radius:50%;pointer-events:none;z-index:99999;mix-blend-mode:difference;transform:translate(-50%,-50%);transition:width .3s ease,height .3s ease,background .3s ease}
+/* ===== CUSTOM CURSOR ===== */
+.cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 17px;
+    height: 17px;
+    background: #c489e2;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    mix-blend-mode: difference;
+    transform: translate(-50%, -50%);
+    transition: width .3s ease, height .3s ease, background .3s ease;
+    
+    /* Hide the custom cursor by default on all devices */
+    display: none; 
+}
 .cursor.hover{width:38px;height:38px}
 .cursor.loading{width:24px;height:24px;background:transparent;border:2px solid #fff;animation:cursorSpin .8s linear infinite}
 .cursor.loading::before,.cursor.loading::after{content:'';position:absolute;background:#fff;top:50%;left:50%;transform:translate(-50%,-50%)}
 .cursor.loading::before{width:12px;height:2px}
 .cursor.loading::after{width:2px;height:12px}
 @keyframes cursorSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
-@media(hover:none)and(pointer:coarse){.cursor{display:none !important}*,a,button{cursor:auto !important}}
+
+/* Only display custom cursor and hide default cursor when a physical mouse is used */
+body.has-mouse .cursor {
+    display: block;
+}
+body.has-mouse *, body.has-mouse a, body.has-mouse button {
+    cursor: none !important;
+}
+
+/* Ensure default cursors are active on mobile/tablet */
+*, a, button {
+    cursor: auto;
+}
 </style>
 </head>
 <body>
@@ -115,54 +143,6 @@
 <script>
 function tick(){var n=new Date(),h=n.getHours(),m=String(n.getMinutes()).padStart(2,'0'),s=String(n.getSeconds()).padStart(2,'0'),ap=h>=12?'PM':'AM';h=h%12;h=h?h:12;document.getElementById('clock').textContent=String(h).padStart(2,'0')+':'+m+':'+s+' '+ap}
 setInterval(tick,1000);tick();
-
-// Masonry layout
-// (function(){
-//     var stage = document.getElementById('stage');
-//     var items = document.querySelectorAll('.m-item');
-//     var gap = 10;
-
-//     function getCols(){
-//         if(window.matchMedia('(max-width:550px)').matches) return 2;
-//         if(window.matchMedia('(max-width:768px)').matches) return 3;
-//         return 3;
-//     }
-
-//     function parseRatio(str){
-//         if(!str) return 1;
-//         var p = str.split(':');
-//         return (parseFloat(p[1])||1) / (parseFloat(p[0])||1);
-//     }
-
-//     function layout(){
-//         var cols = getCols();
-//         var stageW = stage.offsetWidth;
-//         var colW = (stageW - gap * (cols - 1)) / cols;
-//         var colH = [];
-//         for(var c=0;c<cols;c++) colH.push(0);
-
-//         for(var i=0;i<items.length;i++){
-//             var card = items[i];
-//             var ratio = parseRatio(card.getAttribute('data-ratio'));
-//             var h = colW * ratio;
-
-//             var short = 0;
-//             for(var c=1;c<cols;c++) if(colH[c]<colH[short]) short=c;
-
-//             card.style.width = colW+'px';
-//             card.style.height = h+'px';
-//             card.style.transform = 'translate('+( short*(colW+gap) )+'px,'+ colH[short] +'px)';
-//             colH[short] += h + gap;
-//         }
-
-//         var max = 0;
-//         for(var c=0;c<cols;c++) if(colH[c]>max) max=colH[c];
-//         stage.style.height = max+'px';
-//     }
-
-//     layout();
-//     window.addEventListener('resize', layout);
-// })();
 
 (function(){
 var stage = document.getElementById('stage');
@@ -236,14 +216,62 @@ window.addEventListener('pageshow',function(){document.body.classList.remove('is
 
 <script>
 (function(){
-    var cursor=document.getElementById('cursor');
-    document.addEventListener('mousemove',function(e){cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px'});
-    document.addEventListener('mouseover',function(e){if(e.target.closest('a,button,[role="button"]'))cursor.classList.add('hover')});
-    document.addEventListener('mouseout',function(e){if(e.target.closest('a,button,[role="button"]'))cursor.classList.remove('hover')});
-    document.querySelectorAll('a[href]').forEach(function(link){var href=link.getAttribute('href');if(href&&!href.startsWith('#')&&!href.startsWith('mailto:'))link.addEventListener('click',function(){cursor.classList.add('loading')})});
-    window.addEventListener('pageshow',function(){cursor.classList.remove('loading')});
-    document.addEventListener('mouseleave',function(){cursor.style.opacity='0'});
-    document.addEventListener('mouseenter',function(){cursor.style.opacity='1'});
+var cursor = document.getElementById('cursor');
+var hasMouse = false;
+
+// If a touch event occurs first, disable custom cursor activation completely
+window.addEventListener('touchstart', function onFirstTouch() {
+    window.removeEventListener('mousemove', onMouseMoveActivate);
+}, { passive: true });
+
+function onMouseMoveActivate(e) {
+    // A physical mouse movement was detected, enable custom cursor styles
+    document.body.classList.add('has-mouse');
+    hasMouse = true;
+    
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    
+    window.removeEventListener('mousemove', onMouseMoveActivate);
+    
+    document.addEventListener('mousemove', function(e){
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+    });
+}
+
+// Listen for mouse movement to activate
+window.addEventListener('mousemove', onMouseMoveActivate);
+
+document.addEventListener('mouseover', function(e){
+    if(!hasMouse) return;
+    if(e.target.closest('a, button, [role="button"]')){
+        cursor.classList.add('hover');
+    }
+});
+document.addEventListener('mouseout', function(e){
+    if(!hasMouse) return;
+    if(e.target.closest('a, button, [role="button"]')){
+        cursor.classList.remove('hover');
+    }
+});
+document.querySelectorAll('a[href]').forEach(function(link){
+    var href = link.getAttribute('href');
+    if(href && !href.startsWith('#') && !href.startsWith('mailto:')){
+        link.addEventListener('click', function(){ 
+            if(hasMouse) cursor.classList.add('loading'); 
+        });
+    }
+});
+window.addEventListener('pageshow', function(){ 
+    if(cursor) cursor.classList.remove('loading'); 
+});
+document.addEventListener('mouseleave', function(){ 
+    if(hasMouse) cursor.style.opacity='0'; 
+});
+document.addEventListener('mouseenter', function(){ 
+    if(hasMouse) cursor.style.opacity='1'; 
+});
 })();
 </script>
 </body>

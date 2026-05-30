@@ -213,7 +213,7 @@ footer p{font-size:10px;color:#333;letter-spacing:1px}
 .cursor.loading::before{width:12px;height:2px}
 .cursor.loading::after{width:2px;height:12px}
 
-/* Work In Progress (Capsule State matching thickness/color of hover circle) */
+/* ITS A BEAUTIFUL MESS! (Capsule State matching thickness/color of hover circle) */
 .cursor.wip-hover {
   width: 140px;
   height: 38px; /* Matches thickness/diameter of the bigger hover circle */
@@ -238,13 +238,26 @@ footer p{font-size:10px;color:#333;letter-spacing:1px}
 @keyframes cursorSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
 @media(hover:none)and(pointer:coarse){.cursor{display:none !important}.cursor.wip-visible-mobile{display:flex !important}*,a,button{cursor:auto !important}}
 
+/* Explicit Touch Device overrides to completely disable standard custom cursor dot on mobile & tablet formats */
+body.is-touch *, 
+body.is-touch a, 
+body.is-touch button {
+  cursor: auto !important;
+}
+body.is-touch .cursor {
+  display: none !important;
+}
+body.is-touch .cursor.wip-visible-mobile {
+  display: flex !important;
+}
+
 </style>
 </head>
 <body>
 
 <!-- CUSTOM CURSOR -->
 <div class="cursor" id="cursor" style="opacity: 0;">
-  <span class="cursor-text">WORK IN PROGRESS</span>
+  <span class="cursor-text">ITS A BEAUTIFUL MESS!</span>
 </div>
 
 <!-- NAV — Logo (home) + WORKS + CONTACT -->
@@ -261,7 +274,7 @@ footer p{font-size:10px;color:#333;letter-spacing:1px}
 <div class="scrolly-container" id="scrolly-container">
   <section class="hero" id="hero">
     <canvas id="scrolly-canvas"></canvas>
-    <div class="hero-loader" id="hero-loader">CACHING SEQUENCE 0%</div>
+    <div class="hero-loader" id="hero-loader">PIXEL POLISHING 0%</div>
   </section>
 </div>
 
@@ -310,37 +323,40 @@ footer p{font-size:10px;color:#333;letter-spacing:1px}
         <div class="label">GENERATIVE SERIES 03 / 001-016<br><span>2023</span></div>
     </a>
     <a href="project-10.html" class="item" data-ratio="3:4">
-        <div class="thumb"><div class="placeholder" style="background:linear-gradient(135deg,#ff4500,#cc3300)">010</div></div>
-        <div class="label">COMIC SERIES 02<br><span>2026</span></div>
+        <div class="thumb"><img src="images/thumbs/project-10-thumb.jpg" alt="Logofolio"></div>
+        <!-- <div class="thumb"><div class="placeholder" style="background:linear-gradient(135deg,#ff4500,#cc3300)">010</div></div> -->
+        <div class="label">LOGOFOLIO<br><span>2023-26</span></div>
     </a>
     <a href="project-11.html" class="item" data-ratio="1:1">
         <div class="thumb"><img src="images/thumbs/project-11-thumb.jpg" alt="Generative"></div>
         <div class="label">GENERATIVE SERIES 04 / 001-017<br><span>2017</span></div>
     </a>
     <a href="project-12.html" class="item" data-ratio="4:3">
-        <div class="thumb"><div class="placeholder" style="background:linear-gradient(135deg,#33691e,#558b2f)">012</div></div>
-        <div class="label">COMIC SERIES 03<br><span>2026</span></div>
+        <div class="thumb"><img src="images/thumbs/project-12-thumb.jpg" alt="TOYOTA"></div>
+        <!-- <div class="thumb"><div class="placeholder" style="background:linear-gradient(135deg,#33691e,#558b2f)">012</div></div> -->
+        <div class="label">TOYOTA / PITCH PHOTOGRAPHY<br><span>2024</span></div>
     </a>
     <a href="project-13.html" class="item" data-ratio="3:4">
         <div class="thumb"><img src="images/thumbs/project-13-thumb.jpg" alt="PROCESSING"></div>
         <div class="label">MOB x PROCESSING / 001-009<br><span>2021</span></div>
     </a>
     <a href="project-14.html" class="item" data-ratio="16:9">
-        <div class="thumb"><div class="placeholder" style="background:linear-gradient(135deg,#1a3a5a,#2a5a8a)">014</div></div>
-        <div class="label">GENERATIVE SERIES 04<br><span>2020</span></div>
+        <div class="thumb"><img src="images/thumbs/project-14-thumb.jpg" alt="NESTLE"></div>
+        <!-- <div class="thumb"><div class="placeholder" style="background:linear-gradient(135deg,#1a3a5a,#2a5a8a)">014</div></div> -->
+        <div class="label">NESTLE FRUTA VITALS<br><span>2026</span></div>
     </a>
-    <a href="project-15.html" class="item" data-ratio="1:1">
+    <!-- <a href="project-15.html" class="item" data-ratio="1:1">
         <div class="thumb"><div class="placeholder" style="background:linear-gradient(135deg,#4466ff,#2244cc)">015</div></div>
         <div class="label">GENERATIVE SERIES 05<br><span>2020</span></div>
-    </a>
-    <a href="project-16.html" class="item" data-ratio="3:2">
+    </a> -->
+    <!-- <a href="project-16.html" class="item" data-ratio="3:2">
         <div class="thumb"><div class="placeholder" style="background:linear-gradient(135deg,#2a1a3a,#4a2a5a)">016</div></div>
         <div class="label">TOYOTA REVO<br><span>2026</span></div>
-    </a>
+    </a> -->
     <a href="project-17.html" class="item" data-ratio="3:2">
-        <div class="thumb"><div class="placeholder" style="background:linear-gradient(135deg,#0a1a0a,#1aff4a)">001</div></div>
-        <div class="label">GENERATIVE SERIES 06<br><span>2026</span></div>
-    </a>
+        <div class="thumb"><div class="placeholder" style="background:linear-gradient(135deg,#130a1a,#af1aff)">001</div></div>
+        <div class="label">UNDER CONSTRUCTION<br><span>AND LIKELY OVER BUDGET</span></div>
+    </a> 
      <a href="project-18.html" class="item" data-ratio="1:1">
         <div class="thumb"><img src="images/thumbs/project-18-thumb.jpg" alt="Generative"></div>
         <div class="label">GENERATIVE SERIES 02 / CIRCLES 001 - 010<br><span>2021</span></div>
@@ -496,8 +512,9 @@ function drawImageResponsive(ctx, img, canvasW, canvasH) {
 function preloadSelectedSequence() {
     const loader = document.getElementById('hero-loader');
     const cursor = document.getElementById('cursor');
+    const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
 
-    if (cursor) cursor.classList.add('loading');
+    if (cursor && !isTouchDevice) cursor.classList.add('loading');
 
     // Pre-allocate array slots to ensure frames map precisely to indices
     for (let i = 0; i < selectedSeq.totalFrames; i++) {
@@ -521,7 +538,7 @@ function preloadSelectedSequence() {
                 activeConnections--;
                 loadedCount++;
                 const progress = Math.round((loadedCount / selectedSeq.totalFrames) * 100);
-                if (loader) loader.textContent = `CACHING SEQUENCE ${progress}%`;
+                if (loader) loader.textContent = `PIXEL POLISHING ${progress}%`;
 
                 // Assign to its correct sequential slot
                 preloadedImages[index - 1] = img;
@@ -824,38 +841,44 @@ document.querySelectorAll('a.item').forEach(function(link){
     link.addEventListener('click', function(e){
         if(e.metaKey || e.ctrlKey) return;
         
-        // Prevent click and show capsule if there is a placeholder inside (Work In Progress)
-        if (this.querySelector('.placeholder')) {
-            e.preventDefault();
-            
-            if (isWipAnimating) return;
-            isWipAnimating = true;
-            window.isWipShowing = true;
+        // Prevent click if there is a placeholder inside (ITS A BEAUTIFUL MESS!)
+if (this.querySelector('.placeholder')) {
+    e.preventDefault(); // Blocks the click action on ALL devices (laptops, desktops, phones, tablets)
+    
+    // Detect if the user is using a touchscreen (phones/tablets)
+    var isTouchScreen = window.matchMedia('(pointer: coarse)').matches;
 
-            var cursor = document.getElementById('cursor');
-            
-            // Position the capsule at the exact click/tap coordinate
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            
-            // Add classes to show the capsule
-            cursor.classList.add('wip-hover');
-            cursor.classList.add('wip-visible-mobile');
-            cursor.style.opacity = '1';
+    if (isTouchScreen) {
+        // Run the visual "Under Construction" capsule animation ONLY on touchscreens
+        if (isWipAnimating) return;
+        isWipAnimating = true;
+        window.isWipShowing = true;
 
-            // Fade out after 1.2 seconds
+        var cursor = document.getElementById('cursor');
+        
+        // Position the capsule at the exact tap coordinate
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+        
+        // Add classes to show the capsule
+        cursor.classList.add('wip-hover');
+        cursor.classList.add('wip-visible-mobile');
+        cursor.style.opacity = '1';
+
+        // Fade out after 1.2 seconds
+        setTimeout(function() {
+            cursor.style.opacity = '0';
             setTimeout(function() {
-                cursor.style.opacity = '0';
-                setTimeout(function() {
-                    cursor.classList.remove('wip-hover');
-                    cursor.classList.remove('wip-visible-mobile');
-                    isWipAnimating = false;
-                    window.isWipShowing = false;
-                }, 300); // Wait for CSS transition opacity .25s to finish
-            }, 1200);
-            
-            return;
-        }
+                cursor.classList.remove('wip-hover');
+                cursor.classList.remove('wip-visible-mobile');
+                isWipAnimating = false;
+                window.isWipShowing = false;
+            }, 300); // Wait for CSS transition opacity .25s to finish
+        }, 1200);
+    }
+    
+    return;
+}
 
         e.preventDefault();
         var destination = this.href;
@@ -883,9 +906,16 @@ document.querySelectorAll('.nav-brand').forEach(function(brandLink) {
     var cursor = document.getElementById('cursor');
     var activeTimeout = null;
     
+    // Comprehensive touch environment validation to cover iPads/iOS/Android devices
+    var isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
+    if (isTouchDevice) {
+        document.body.classList.add('is-touch');
+    }
+    
     // Check for pointer event validation. PointerEvents cleanly filter touch/pen pressure inputs 
     // to block sticky cursor artifacts from displaying on mobile and tablet platforms.
     document.addEventListener('pointermove', function(e){
+        if (isTouchDevice) return;
         if (window.isWipShowing) return;
         if (e.pointerType !== 'mouse') {
             cursor.style.opacity = '0';
@@ -897,6 +927,7 @@ document.querySelectorAll('.nav-brand').forEach(function(brandLink) {
     });
     
     document.addEventListener('pointerover', function(e){
+        if (isTouchDevice) return;
         if (window.isWipShowing) return;
         if (e.pointerType !== 'mouse') return;
         
@@ -912,6 +943,7 @@ document.querySelectorAll('.nav-brand').forEach(function(brandLink) {
     });
     
     document.addEventListener('pointerout', function(e){
+        if (isTouchDevice) return;
         if (window.isWipShowing) return;
         if (e.pointerType !== 'mouse') return;
         
@@ -940,6 +972,7 @@ document.querySelectorAll('.nav-brand').forEach(function(brandLink) {
                     e.preventDefault();
                     return;
                 }
+                if (isTouchDevice) return;
                 
                 // Only trigger the custom cursor loading state if the cursor is active (non-touch)
                 if (window.getComputedStyle(cursor).opacity !== '0' && !window.matchMedia('(pointer: coarse)').matches) {
@@ -956,8 +989,9 @@ document.querySelectorAll('.nav-brand').forEach(function(brandLink) {
         cursor.style.opacity = '0';
     });
     
-    document.addEventListener('pointerleave', function(){ cursor.style.opacity='0'; });
+    document.addEventListener('pointerleave', function(){ if (!isTouchDevice) cursor.style.opacity='0'; });
     document.addEventListener('pointerenter', function(e){ 
+        if (isTouchDevice) return;
         if (e.pointerType === 'mouse') {
             cursor.style.opacity='1'; 
         }
