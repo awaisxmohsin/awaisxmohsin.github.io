@@ -110,31 +110,33 @@ nav{position:fixed;top:0;width:100%;display:flex;justify-content:space-between;a
 /* ===== GET IN TOUCH ===== */
 .touch{padding:100px 44px 60px;background:#111;border-top:1px solid #1a1a1a;z-index:10;position:relative}
 .touch h2{font-size:28px;font-weight:700;text-transform:uppercase;margin-bottom:24px;letter-spacing:-1px}
-.touch-links{display:flex;gap:32px}
-.touch-links a{font-size:12px;font-weight:500;letter-spacing:.5px;text-transform:uppercase;transition:opacity .25s}
+.touch-links{display:flex;gap:32px;align-items:center}
+.touch-links a{font-size:12px;font-weight:500;letter-spacing:.5px;text-transform:uppercase;transition:opacity .25s;white-space:nowrap}
 .touch-links a:hover{opacity:.5}
 
-/* ===== PHONE LINK ===== */
+.location{
+font-size:12px;
+font-weight:500;
+letter-spacing:.5px;
+text-transform:uppercase;
+color:#666;
+white-space:nowrap;
+}
+
+/* Mobile fix */
+@media (max-width: 600px) {
+.touch-links{
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+}
+
 @media (hover: hover) and (pointer: fine) {
-.phone-link {
-  cursor: default;
-  pointer-events: none;
+.phone-link{cursor:default;pointer-events:none}
 }
-}
-
 @media (hover: none) and (pointer: coarse) {
-.phone-link {
-  cursor: pointer;
-  pointer-events: auto;
-}
-}
-
-.location {
-font-size: 12px;
-font-weight: 500;
-letter-spacing: .5px;
-text-transform: uppercase;
-color: #666;
+.phone-link{cursor:pointer;pointer-events:auto}
 }
 
 /* ===== FOOTER ===== */
