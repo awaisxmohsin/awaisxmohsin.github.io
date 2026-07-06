@@ -1,7 +1,7 @@
 .DS_Store
 ._*
 .vscode/
-.env
+.env*
 Thumbs.db
 *.key
 *.pem
